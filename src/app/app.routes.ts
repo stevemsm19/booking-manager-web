@@ -4,6 +4,5 @@ import { MainPage } from './components/main-page/main-page';
 
 export const routes: Routes = [
   { path: 'login', component: SignIn },
-  { path: '', component: MainPage },
-  { path: '**', redirectTo: '' } 
+  { path: '', component: MainPage }
 ];

@@ -27,4 +27,8 @@ export class Cards implements OnInit {
     });
   }
 
+  handleCardClick(hotelId: string) {
+    console.log('Card clicked with hotel ID:', hotelId);
+  }
+  
 }
