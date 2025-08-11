@@ -1,0 +1,6 @@
+
+<div class="cards">
+    @for (hotelItem of hotels; track hotelItem._id) {
+        <app-card-item [hotel]="hotelItem"></app-card-item>
+    }
+</div>
