@@ -1,6 +1,0 @@
-
-<div class="cards">
-    @for (hotelItem of hotels; track hotelItem._id) {
-        <app-card-item [hotel]="hotelItem" (cardClicked)="handleCardClick($event)"></app-card-item>
-    }
-</div>
