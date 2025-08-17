@@ -22,3 +22,20 @@
     padding-bottom: 1rem;
 }
 
+.price {
+  display: flex;
+  align-items: center;
+  margin-top: 1rem;
+}
+
+.price-value {
+  font-size: 1rem;
+  font-weight: bold;
+  color: black;
+}
+
+.price-label {
+  font-size: 0.9rem;
+  color: #888;
+  margin-left: 5px;
+}

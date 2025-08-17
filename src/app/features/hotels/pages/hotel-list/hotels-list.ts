@@ -1,29 +1,44 @@
-import { Component, inject } from '@angular/core';
-import { HotelDataService } from '../../service/hotels-data';
-import { HotelCard } from '../../components/card-item/hotel-card';
+import { Component, inject, Input, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Observable } from 'rxjs';
+import { Hotel } from '../../interfaces/hotel-interface';
+import { HotelService } from '../../services/hotel-service';
+import { HotelCard } from '../../components/card-item/hotel-card';
 
 @Component({
   selector: 'app-hotels-list',
-  imports: [HotelCard, CommonModule],
+  standalone: true,
+  imports: [CommonModule, HotelCard],
   template: `
     <div class="cards">
       @for (hotelItem of hotels$ | async; track hotelItem._id) {
-      <app-hotel-card
-        [hotel]="hotelItem"
-        (cardClicked)="handleCardClick($event)"
-      ></app-hotel-card>
+        <app-hotel-card
+          [hotel]="hotelItem"
+          (cardClicked)="handleCardClick($event)"
+        ></app-hotel-card>
       }
     </div>
   `,
   styleUrl: './hotels-list.scss',
 })
-export class HotelsList {
-  private configService = inject(HotelDataService);
-  
-  hotels$ = this.configService.getHotels();
+export class HotelsList implements OnInit {
+  @Input() filters: any = {};
+  hotels$!: Observable<Hotel[]>;
+  private hotelService = inject(HotelService);
+
+  ngOnInit(): void {
+    this.fetchHotels();
+  }
+
+  ngOnChanges(): void {
+    this.fetchHotels();
+  }
 
   handleCardClick(hotelId: string) {
     console.log('Card clicked with hotel ID:', hotelId);
+  }
+
+  fetchHotels() {
+    this.hotels$ = this.hotelService.getHotels(this.filters);
   }
 }
