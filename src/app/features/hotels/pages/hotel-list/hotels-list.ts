@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { Hotel } from '../../interfaces/hotel-interface';
 import { HotelService } from '../../services/hotel-services';
 import { HotelCard } from '../../components/card-item/hotel-card';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-hotels-list',
@@ -36,6 +37,8 @@ export class HotelsList implements OnInit {
   hotels$!: Observable<Hotel[]>;
   private hotelService = inject(HotelService);
 
+  constructor(private router: Router) {}
+
   ngOnInit(): void {
     this.fetchHotels();
   }
@@ -45,7 +48,7 @@ export class HotelsList implements OnInit {
   }
 
   handleCardClick(hotelId: string) {
-    console.log('Card clicked with hotel ID:', hotelId);
+    this.router.navigate([`/book/stay/${hotelId}`]); 
   }
 
   fetchHotels() {

@@ -21,4 +21,8 @@ export class HotelApiService {
 
     return this.api.get<any>(`${this.baseEndpoint}/search`, { params });
   }
+
+  getHotelById(hotelId: string): Observable<any> {
+    return this.api.get<any>(`${this.baseEndpoint}/${hotelId}`);
+  }
 }

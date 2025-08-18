@@ -1,0 +1,33 @@
+.booking-container {
+  padding: 20px;
+  background-color: #f5f5f5;
+  border-radius: 8px;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+h1 {
+  color: #1976d2;
+}
+
+h2 {
+  font-size: 1.8rem;
+  margin-top: 20px;
+}
+
+h3 {
+  font-size: 1.2rem;
+  color: #333;
+}
+
+input[type="date"] {
+  margin-top: 10px;
+  padding: 8px;
+  width: 100%;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}
+
+button {
+  margin-top: 20px;
+}
