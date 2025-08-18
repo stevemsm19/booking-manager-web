@@ -118,7 +118,7 @@ export class SearchBar {
       location: this.location,
       checkIn: this.checkInDate,
       checkOut: this.checkOutDate,
-      numberOfGuests: this.numberOfGuests,
+      numberOfGuests: this.numberOfGuests === null ? 1 : this.numberOfGuests,
       minPrice: this.minPrice,
       maxPrice: this.maxPrice,
       page: 1,
