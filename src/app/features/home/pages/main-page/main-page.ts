@@ -6,10 +6,16 @@ import { HotelsList } from '../../../hotels/pages/hotel-list/hotels-list';
   selector: 'app-main-page',
   imports: [SearchBar, HotelsList],
   template: `
-    <app-search-bar></app-search-bar>
-    
-    <app-hotels-list></app-hotels-list>
+    <app-search-bar (filtersChanged)="onFiltersChanged($event)"></app-search-bar>
+
+    <app-hotels-list [filters]="filters"></app-hotels-list>
   `,
-  styleUrl: './main-page.scss',
+  styleUrls: ['./main-page.scss'],
 })
-export class MainPage {}
+export class MainPage {
+  filters: any = {};
+
+  onFiltersChanged(filters: any) {
+    this.filters = filters;
+  }
+}

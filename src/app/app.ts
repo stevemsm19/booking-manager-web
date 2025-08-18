@@ -21,5 +21,3 @@ import { Footer } from './core/layout/footer/footer';
 export class App {
   protected title = 'my-app';
 }
-// TODO cambiar nombre al commit
-// TODO crear us para login y main page
