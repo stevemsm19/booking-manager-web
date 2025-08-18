@@ -29,6 +29,5 @@ export class HotelCard {
 
   onCardClick() {
     this.cardClicked.emit(this.hotel._id);
-    this.router.navigate([`/hotel/${this.hotel._id}`]);
   }
 }
