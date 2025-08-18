@@ -16,6 +16,7 @@ import {
   withEventReplay,
 } from '@angular/platform-browser';
 import { HttpErrorInterceptor } from './core/interceptors/http-error-interceptor'; 
+import { AuthTokenInterceptor } from './core/interceptors/auth-token-interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -30,5 +31,6 @@ export const appConfig: ApplicationConfig = {
     ),
     
     { provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true },  
+    { provide: HTTP_INTERCEPTORS, useClass: AuthTokenInterceptor,  multi: true },
   ],
 };

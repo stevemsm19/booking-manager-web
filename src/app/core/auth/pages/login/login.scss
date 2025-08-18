@@ -96,4 +96,11 @@
     text-decoration: underline;
   }
 
+  
+  .error-message {
+    color: red;
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+  }
 }

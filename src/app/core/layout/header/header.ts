@@ -3,6 +3,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { RouterLink } from '@angular/router';
+import { LocalStorageService } from '../../auth/services/local-storage';
 
 @Component({
   selector: 'app-header',
@@ -19,10 +20,23 @@ import { RouterLink } from '@angular/router';
     <span class="spacer"></span>
 
     <div class="auth-buttons">
+      @if (!isLoggedIn) {
       <button mat-button class="signin" routerLink="/login">Sign In</button>
       <button mat-raised-button class="signup">Sign Up</button>
+      }
+      @else {
+        <button mat-raised-button class="profiel">Profile</button>
+      }
     </div>
   </header> `,
   styleUrl: './header.scss',
 })
-export class Header {}
+export class Header {
+  isLoggedIn = false; 
+
+  constructor(
+    private localStorageService: LocalStorageService 
+  ) {
+    this.isLoggedIn = !!this.localStorageService.getItem('accessToken');
+  }
+}

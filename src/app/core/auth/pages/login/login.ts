@@ -9,6 +9,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
+import { AuthService } from '../../services/auth-service';
+import { Router } from '@angular/router'; 
 
 @Component({
   selector: 'app-login',
@@ -38,7 +40,15 @@ import { MatButtonModule } from '@angular/material/button';
           placeholder="Enter your password"
         />
         <div class="error">{{ getPasswordErrorMessage() }}</div>
+
         <button type="submit">Login</button>
+
+        @if(loginError){
+          <div class="error-message" style="color: red;">
+            {{ loginError }}
+          </div>
+        }
+
         <span class="auth-footer">
           Don't have an account? <a href="/register">Sign up</a>
         </span>
@@ -50,8 +60,13 @@ import { MatButtonModule } from '@angular/material/button';
 export class LoginComponent {
   submitted = false;
   loginForm: FormGroup;
+  loginError: string | null = null;
 
-  constructor(private fb: FormBuilder) {
+  constructor(
+    private fb: FormBuilder,
+    private authService: AuthService,
+    private router: Router 
+  ) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required]],
@@ -100,5 +115,20 @@ export class LoginComponent {
 
   onSubmit() {
     this.submitted = true;
+
+    if (this.loginForm.invalid) {
+      return;
+    }
+
+    const { email, password } = this.loginForm.value;
+
+    this.authService.login(email, password).subscribe({
+      next: () => {
+        this.router.navigate(['/']); 
+      },
+      error: (err) => {
+        this.loginError = err.error.details;
+      },
+    });
   }
 }
