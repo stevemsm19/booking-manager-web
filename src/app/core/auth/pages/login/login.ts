@@ -4,49 +4,41 @@ import {
   FormGroup,
   FormBuilder,
   Validators,
+  FormControl,
 } from '@angular/forms';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatIconModule } from '@angular/material/icon';
-import { MatButtonModule } from '@angular/material/button';
 import { AuthService } from '../../services/auth-service';
-import { Router } from '@angular/router'; 
+import { Router } from '@angular/router';
+import { InputFieldComponent } from '../../../../shared/components/input-field/input-field';
 
 @Component({
   selector: 'app-login',
-  imports: [
-    ReactiveFormsModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatIconModule,
-    MatButtonModule,
-  ],
+  imports: [ReactiveFormsModule, InputFieldComponent],
   template: `
     <div class="login-container">
       <h1 class="heading-title leading">Sign in</h1>
       <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form">
-        <label>Email</label>
-        <input
+        <app-input-field
+          label="Email"
           type="email"
-          formControlName="email"
           placeholder="Enter your email"
+          [required]="true"
+          [control]="getControl('email')"
+          [error]="getEmailErrorMessage()"
         />
-        <div class="error">{{ getEmailErrorMessage() }}</div>
 
-        <label>Password</label>
-        <input
+        <app-input-field
+          label="Password"
           type="password"
-          formControlName="password"
           placeholder="Enter your password"
+          [required]="true"
+          [control]="getControl('password')"
+          [error]="getPasswordErrorMessage()"
         />
-        <div class="error">{{ getPasswordErrorMessage() }}</div>
 
         <button type="submit">Login</button>
 
         @if(loginError){
-          <div class="error-message" style="color: red;">
-            {{ loginError }}
-          </div>
+          <div class="error-message" style="color: red;">{{ loginError }}</div>
         }
 
         <span class="auth-footer">
@@ -58,14 +50,14 @@ import { Router } from '@angular/router';
   styleUrls: ['./login.scss'],
 })
 export class LoginComponent {
-  submitted = false;
   loginForm: FormGroup;
   loginError: string | null = null;
+  submitted = false;
 
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
-    private router: Router 
+    private router: Router,
   ) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
@@ -73,16 +65,12 @@ export class LoginComponent {
     });
   }
 
-  get email() {
-    return this.loginForm.get('email');
-  }
-
-  get password() {
-    return this.loginForm.get('password');
+  getControl(name: string) {
+    return this.loginForm.get(name) as FormControl;
   }
 
   getEmailErrorMessage(): string {
-    const emailControl = this.email;
+    const emailControl = this.getControl('email');
     if (
       emailControl &&
       (emailControl?.touched || emailControl?.dirty || this.submitted == true)
@@ -99,7 +87,7 @@ export class LoginComponent {
   }
 
   getPasswordErrorMessage(): string {
-    const passwordControl = this.password;
+    const passwordControl = this.getControl('password');
     if (
       passwordControl &&
       (passwordControl?.touched ||
@@ -124,7 +112,7 @@ export class LoginComponent {
 
     this.authService.login(email, password).subscribe({
       next: () => {
-        this.router.navigate(['/']); 
+        this.router.navigate(['/']);
       },
       error: (err) => {
         this.loginError = err.error.details;

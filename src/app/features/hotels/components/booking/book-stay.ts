@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { HotelService } from '../../services/hotel-services';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { tap } from 'rxjs';
+import { HotelDetails } from '../../interfaces/hotel-details';
 
 @Component({
   selector: 'app-book-stay',
@@ -14,20 +16,12 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
       <h3>Booking Dates</h3>
       <div>
         <label for="checkIn">Check-in:</label>
-        <input
-          type="date"
-          id="checkIn"
-          [(ngModel)]="checkInDate"
-        />
+        <input type="date" id="checkIn" [(ngModel)]="checkInDate" />
       </div>
 
       <div>
         <label for="checkOut">Check-out:</label>
-        <input
-          type="date"
-          id="checkOut"
-          [(ngModel)]="checkOutDate"
-        />
+        <input type="date" id="checkOut" [(ngModel)]="checkOutDate" />
       </div>
 
       <div>
@@ -51,14 +45,14 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 })
 export class BookStayComponent implements OnInit {
   hotelId: string | null = null;
-  hotel: any = {}; 
+  hotel: any = {};
   checkInDate: string = '';
   checkOutDate: string = '';
-  userName: string = 'Oscar M'; 
+  userName: string = 'Oscar M';
 
   constructor(
     private route: ActivatedRoute,
-    private hotelService: HotelService 
+    private hotelService: HotelService
   ) {}
 
   ngOnInit(): void {
@@ -71,9 +65,15 @@ export class BookStayComponent implements OnInit {
   }
 
   loadHotelDetails(hotelId: string): void {
-    this.hotelService.getHotelDetails(hotelId).subscribe((response) => {
-      this.hotel = response; 
-    });
+    this.hotelService
+      .getHotelDetails(hotelId)
+      .pipe(
+        tap((response: HotelDetails) => {
+          this.hotel = response;
+          console.log(this.hotel.title); 
+        })
+      )
+      .subscribe(); 
   }
 
   onSubmitBooking(): void {

@@ -8,10 +8,9 @@
   padding: 12px 30px;
   border-radius: 50px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  max-width: 1050px;
+  max-width: 1200px;
   margin: 20px auto auto;
 
-  
   @media (max-width: 1024px) {
     max-width: 700px;
     justify-content: center;
@@ -23,7 +22,6 @@
     justify-content: center;
     border-radius: 20px;
   }
-
 }
 
 .search-item {
@@ -66,12 +64,24 @@ label {
   }
 }
 
-.search-btn {
+.button-group {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  @media (max-width: 768px) {
+    flex-direction: row;
+    justify-content: center;
+  }
+}
+
+.search-btn, .clear-btn {
   background: #1976d2;
   color: white;
   border: none;
   padding: 8px 16px;
   border-radius: 20px;
+  white-space: nowrap;
   cursor: pointer;
   transition: background 0.2s ease;
 
@@ -82,4 +92,8 @@ label {
   @media (max-width: 768px) {
     width: 100%;
   }
+}
+
+.clear-btn {
+  background: #f44336;
 }

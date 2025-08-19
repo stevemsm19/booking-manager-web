@@ -48,7 +48,7 @@ export class HotelsList implements OnInit {
   }
 
   handleCardClick(hotelId: string) {
-    this.router.navigate([`/book/stay/${hotelId}`]); 
+    this.router.navigate(['/book/stay', hotelId]);
   }
 
   fetchHotels() {

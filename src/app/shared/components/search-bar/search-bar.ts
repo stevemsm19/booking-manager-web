@@ -5,7 +5,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
   selector: 'app-search-bar',
   imports: [FormsModule, ReactiveFormsModule],
   template: `
-    <div class="search-bar">
+    <div class="search-bar" (keydown.enter)="onSearch()">
       <div class="search-item where">
         <label>Where to?</label>
         <input
@@ -72,9 +72,14 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
         </div>
       </div>
 
-      <button mat-raised-button class="search-btn" (click)="onSearch()">
-        Search
-      </button>
+      <div class="button-group">
+        <button mat-raised-button class="search-btn" (click)="onSearch()">
+          Search
+        </button>
+        <button mat-raised-button class="clear-btn" (click)="clearFilters()">
+          Clear Filters
+        </button>
+      </div>
     </div>
   `,
   styleUrls: ['./search-bar.scss'],
@@ -125,5 +130,18 @@ export class SearchBar {
       size: 10,
     };
     this.filtersChanged.emit(filters);
+  }
+
+  clearFilters() {
+    this.location = '';
+    this.checkInDate = '';
+    this.checkOutDate = '';
+    this.numberOfGuests = '';
+    this.minPrice = '';
+    this.maxPrice = '';
+
+    this.isCheckOutDisabled = true;
+
+    this.onSearch();
   }
 }

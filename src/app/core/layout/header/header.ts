@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
@@ -21,22 +21,22 @@ import { LocalStorageService } from '../../auth/services/local-storage';
 
     <div class="auth-buttons">
       @if (!isLoggedIn) {
-      <button mat-button class="signin" routerLink="/login">Sign In</button>
-      <button mat-raised-button class="signup">Sign Up</button>
-      }
-      @else {
-        <button mat-raised-button class="profiel">Profile</button>
+        <button mat-button class="signin" routerLink="/login">Sign In</button>
+        <button mat-raised-button class="signup">Sign Up</button>
+      } @else {
+        <button mat-raised-button class="profile">Profile</button>
       }
     </div>
   </header> `,
   styleUrl: './header.scss',
 })
-export class Header {
-  isLoggedIn = false; 
+export class Header implements OnInit {
+  isLoggedIn = false;
 
-  constructor(
-    private localStorageService: LocalStorageService 
-  ) {
+  constructor(private localStorageService: LocalStorageService) {}
+  
+  ngOnInit(): void {
     this.isLoggedIn = !!this.localStorageService.getItem('accessToken');
   }
+
 }

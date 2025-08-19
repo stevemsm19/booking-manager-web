@@ -18,7 +18,6 @@ export class LocalStorageService {
       const value = localStorage.getItem(key);
       return value ? JSON.parse(value) : null;
     } catch (error) {
-      console.error('Error reading from local storage', error);
       return null;
     }
   }

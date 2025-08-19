@@ -8,21 +8,24 @@ import {
 } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
+import { LocalStorageService } from '../auth/services/local-storage';
+import { Router } from '@angular/router';
 
 @Injectable()
 export class HttpErrorInterceptor implements HttpInterceptor {
+  constructor(private localStorage: LocalStorageService, private router: Router) {}
+
   intercept(
     req: HttpRequest<any>,
     handler: HttpHandler
   ): Observable<HttpEvent<any>> {
     return handler.handle(req).pipe(
       catchError((error: HttpErrorResponse) => {
-        console.log('Error status:', error.status);
-        console.log('Error message:', error.message);
 
         if (error.status === 401) {
           console.log('Unauthorized access');
-          //Todo: Handle the 401 error if necessary
+          this.localStorage.clear();
+          this.router.navigate(['/login'])
         } else if (error.status === 500) {
           console.log('Server error');
           //Todo: Handle the 500 error if necessary
