@@ -10,7 +10,7 @@
   <span class="spacer"></span>
 
   <div class="auth-buttons">
-    @if (!isLoggedIn) {
+    @if (!isLoggedIn()) {
     <app-button color="primary" routerLink="/login">Login</app-button>
     <app-button color="secondary" routerLink="/register">Register</app-button>
     } @else {

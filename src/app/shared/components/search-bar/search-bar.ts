@@ -1,72 +1,124 @@
 import { Component, EventEmitter, Output } from '@angular/core';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { ButtonComponent } from "../buttom/button";
-import { InputFieldComponent } from "../input-field/input-field";
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
+import { ButtonComponent } from '../buttom/button';
+import { InputFieldComponent } from '../input-field/input-field';
+import { priceRangeValidator } from '../../utils/validators/price-range';
+import { ValidationService } from '../../../core/services/validation-service';
 
 @Component({
   selector: 'app-search-bar',
-  imports: [FormsModule, ReactiveFormsModule, ButtonComponent, InputFieldComponent],
+  standalone: true,
+  imports: [ReactiveFormsModule, ButtonComponent, InputFieldComponent],
   templateUrl: './search-bar.html',
   styleUrls: ['./search-bar.scss'],
 })
 export class SearchBarComponent {
   @Output() filtersChanged = new EventEmitter<any>();
 
-  location = '';
-  checkInDate = '';
-  checkOutDate = '';
-  numberOfGuests = '';
-  minPrice = '';
-  maxPrice = '';
+  form: FormGroup;
+  submitted = false;
 
   minCheckInInput = new Date().toISOString().split('T')[0];
   minCheckOutInput = '';
-  isCheckOutDisabled = true;
-
   minPriceInput = 10;
   maxPriceInput = 100000;
-
   minTravelersInput = 1;
   maxTravelersInput = 16;
 
-  updateCheckOutMinDate() {
-    if (this.checkInDate) {
-      this.isCheckOutDisabled = false;
+  constructor(private fb: FormBuilder) {
+    this.form = this.fb.group(
+      {
+        location: [''],
+        checkIn: [''],
+        checkOut: [{ value: '', disabled: true }],
+        numberOfGuests: [
+          '',
+          [
+            Validators.min(this.minTravelersInput),
+            Validators.max(this.maxTravelersInput),
+          ],
+        ],
+        minPrice: [
+          '',
+          [
+            Validators.min(this.minPriceInput),
+            Validators.max(this.maxPriceInput),
+          ],
+        ],
+        maxPrice: [
+          '',
+          [
+            Validators.min(this.minPriceInput),
+            Validators.max(this.maxPriceInput),
+          ],
+        ],
+      },
+      { validators: priceRangeValidator }
+    );
+  }
 
-      const checkInDate = new Date(this.checkInDate);
+  getControl(name: string) {
+    return this.form.get(name) as FormControl;
+  }
+
+  updateCheckOutMinDate() {
+    const checkIn = this.getControl('checkIn')?.value;
+    if (checkIn) {
+      const checkInDate = new Date(checkIn);
       checkInDate.setDate(checkInDate.getDate() + 1);
       this.minCheckOutInput = checkInDate.toISOString().split('T')[0];
+      this.getControl('checkOut')?.enable();
     } else {
-      this.isCheckOutDisabled = true;
       this.minCheckOutInput = '';
-      this.checkOutDate = '';
+      this.getControl('checkOut')?.disable();
+      this.getControl('checkOut')?.reset();
     }
   }
 
   onSearch() {
-    const filters = {
-      location: this.location,
-      checkIn: this.checkInDate,
-      checkOut: this.checkOutDate,
-      numberOfGuests: this.numberOfGuests === null ? 1 : this.numberOfGuests,
-      minPrice: this.minPrice,
-      maxPrice: this.maxPrice,
-      page: 1,
-      size: 10,
-    };
-    this.filtersChanged.emit(filters);
+    this.submitted = true;
+
+    if (this.form.invalid) {
+      Object.keys(this.form.controls).forEach((key) => {
+        const control = this.form.get(key);
+        if (control && control.invalid) {
+          console.warn(`Control "${key}" es inválido:`, control.errors);
+        }
+      });
+      const messageError = ValidationService.getFormErrorMessage(
+        this.form,
+        this.submitted
+      );
+      this.clearFilters();
+      return alert(messageError);
+    }
+
+    if (this.form.valid) {
+      const filters = {
+        ...this.form.getRawValue(),
+        page: 1,
+        size: 10,
+      };
+      this.filtersChanged.emit(filters);
+    }
   }
 
   clearFilters() {
-    this.location = '';
-    this.checkInDate = '';
-    this.checkOutDate = '';
-    this.numberOfGuests = '';
-    this.minPrice = '';
-    this.maxPrice = '';
-
-    this.isCheckOutDisabled = true;
-
+    this.form.reset({
+      location: '',
+      checkIn: '',
+      checkOut: '',
+      numberOfGuests: '',
+      minPrice: '',
+      maxPrice: '',
+    });
+    this.form.get('checkOut')?.disable();
     this.onSearch();
   }
 }

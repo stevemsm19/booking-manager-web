@@ -3,6 +3,7 @@
   <form
     [formGroup]="registerForm"
     (ngSubmit)="onSubmit()"
+    (change)="onChange()"
     class="register-form"
   >
     <app-input-field

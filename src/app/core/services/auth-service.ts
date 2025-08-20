@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, signal } from '@angular/core';
 import { LocalStorageService } from './local-storage';
 import { Observable, tap } from 'rxjs';
 import { HttpClientService } from './http-client-services';
@@ -8,16 +8,16 @@ interface LoginResponse {
 }
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthService {
-
-  private loginUrl = 'auth/login';  
-  private registerUrl = 'auth/register';  
+  private loginUrl = 'auth/login';
+  private registerUrl = 'auth/register';
+  isLoggedIn = signal<boolean>(false); 
 
   constructor(
-    private apiService: HttpClientService, 
-    private localStorageService: LocalStorageService 
+    private apiService: HttpClientService,
+    private localStorageService: LocalStorageService
   ) {}
 
   register(email: string, password: string): Observable<LoginResponse> {
@@ -29,6 +29,7 @@ export class AuthService {
     const payload = { email, password };
     return this.apiService.post<LoginResponse>(this.loginUrl, payload).pipe(
       tap((response: LoginResponse) => {
+        this.isLoggedIn.set(true);
         this.localStorageService.setItem('accessToken', response.idToken);
       })
     );
@@ -40,5 +41,6 @@ export class AuthService {
 
   logout(): void {
     this.localStorageService.removeItem('accessToken');
+    this.isLoggedIn.set(false);
   }
 }

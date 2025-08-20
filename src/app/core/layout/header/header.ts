@@ -1,29 +1,21 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { ButtonComponent } from '../../../shared/components/buttom/button';
 import { AuthService } from '../../services/auth-service';
 
 @Component({
   selector: 'app-header',
-  imports: [
-    RouterLink,
-    ButtonComponent,
-  ],
+  imports: [RouterLink, ButtonComponent],
   templateUrl: './header.html',
   styleUrl: './header.scss',
 })
-export class Header implements OnInit {
-  isLoggedIn = false;
+export class Header {
+  private auth = inject(AuthService);
 
-  constructor(private auth: AuthService) {}
-
-  ngOnInit(): void {
-    if (this.auth.getToken()) {
-      this.isLoggedIn = true;
-    } 
-  }
+  isLoggedIn = this.auth.isLoggedIn;
 
   logout(): void {
     this.auth.logout();
+    console.log(this.isLoggedIn)
   }
 }

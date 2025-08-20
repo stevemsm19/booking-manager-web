@@ -40,18 +40,18 @@ export class LoginComponent {
   }
 
   getEmailErrorMessage(): string {
-    return ValidationService.getErrorMessage(
+    return ValidationService.getFieldErrorMessage(
       this.getControl('email'),
-      'Email',
-      this.submitted
+      this.submitted,
+      'Email'
     );
   }
 
   getPasswordErrorMessage(): string {
-    return ValidationService.getErrorMessage(
+    return ValidationService.getFieldErrorMessage(
       this.getControl('password'),
-      'Password',
-      this.submitted
+      this.submitted,
+      'Password'
     );
   }
 

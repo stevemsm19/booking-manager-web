@@ -14,7 +14,7 @@ export class InputFieldComponent {
   @Input() control: FormControl = new FormControl();
   @Input() required = false;
   @Input() error: string = '';
-  // @Input() disabled: boolean = false;
+  @Input() disabled: boolean = false;
   @Input() min: number | string = '';
   @Input() max: number | string = '';
 }

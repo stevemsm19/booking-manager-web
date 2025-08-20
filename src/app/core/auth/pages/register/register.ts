@@ -12,7 +12,7 @@ import {
 } from '@angular/forms';
 import { PasswordMatchValidator } from '../../../../shared/utils/validators/password-match';
 import { Alert } from '../../../../shared/components/alert/alert';
-import { ButtonComponent } from "../../../../shared/components/buttom/button";
+import { ButtonComponent } from '../../../../shared/components/buttom/button';
 
 @Component({
   selector: 'app-register',
@@ -46,40 +46,41 @@ export class RegisterComponent {
   }
 
   getEmailErrorMessage(): string {
-    return ValidationService.getErrorMessage(
+    return ValidationService.getFieldErrorMessage(
       this.getControl('email'),
-      'Email',
-      this.submitted
+      this.submitted,
+      'Email'
     );
   }
 
   getPasswordErrorMessage(): string {
-    return ValidationService.getErrorMessage(
+    return ValidationService.getFieldErrorMessage(
       this.getControl('password'),
-      'Password',
-      this.submitted
+      this.submitted,
+      'Password'
     );
   }
 
   getConfirmPasswordErrorMessage(): string {
-    const confirmError = ValidationService.getErrorMessage(
+    return ValidationService.getFieldErrorMessage(
       this.getControl('confirmPassword'),
-      'Confirm password',
-      this.submitted
+      this.submitted,
+      'Confirm password'
     );
-    if (confirmError) return confirmError;
+  }
 
-    if (this.registerForm.hasError('passwordMismatch')) {
-      return 'Passwords do not match';
-    }
-
-    return '';
+  onChange() {
+    this.formError.set('');
   }
 
   onSubmit() {
     this.submitted = true;
 
-    if (this.registerForm.invalid) return;
+    if (this.registerForm.invalid) {
+      return this.formError.set(
+        ValidationService.getFieldErrorMessage(this.registerForm, this.submitted)
+      );
+    }
 
     const { email, password } = this.registerForm.value;
 
