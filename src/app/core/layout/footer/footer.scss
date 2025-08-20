@@ -1,6 +1,6 @@
 .footer {
-  background-color: #f0e9e9ec; 
-  height: 60px;
+  background-color: #f0e9e9ec;
+  height: 60px; 
   padding: 1rem 2rem;
   display: flex;
   justify-content: space-between;
@@ -19,17 +19,19 @@
     gap: 1rem;
 
     .footer-item {
-        display: flex;
-        align-items: center;
-        gap: 0.3rem;
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
     }
   }
 
   @media (max-width: 768px) {
     flex-direction: column;
+    align-items: center;
 
     .footer-right {
       justify-content: center;
+      width: 100%;
     }
   }
 }

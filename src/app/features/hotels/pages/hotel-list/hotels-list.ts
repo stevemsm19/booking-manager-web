@@ -1,44 +1,27 @@
-import { Component, inject, Input, OnInit } from '@angular/core';
+import { Component, inject, Input, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Observable } from 'rxjs';
-import { Hotel } from '../../interfaces/hotel-interface';
-import { HotelService } from '../../services/hotel-services';
+import { Hotel } from '../../models/hotel-model';
+import { HotelService } from '../../../services/hotel-services';
 import { HotelCard } from '../../components/card-item/hotel-card';
 import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-hotels-list',
-  standalone: true,
   imports: [CommonModule, HotelCard],
-  template: `
-    <div>
-      @if (hotels$) {
-        <div class="cards">
-          @for (hotelItem of hotels$ | async; track hotelItem._id) {
-            <app-hotel-card
-              [hotel]="hotelItem"
-              (cardClicked)="handleCardClick($event)"
-            ></app-hotel-card>
-          }
-        </div>
-      } 
-      @else {
-        <div class="no-hotels-banner">
-          <h3>No Hotels Found</h3>
-          <p>Sorry, we couldn't find any hotels matching your criteria.</p>
-        </div>
-      }
-    </div>
-  `,
+  templateUrl: './hotel-list.html',
   styleUrl: './hotels-list.scss',
 })
 export class HotelsList implements OnInit {
   @Input() filters: any = {};
-  hotels$!: Observable<Hotel[]>;
-  private hotelService = inject(HotelService);
 
-  constructor(private router: Router) {}
+  hotels = signal<Hotel[]>([]);
+  loading = signal(true);
 
+  constructor(
+    private hotelService: HotelService,
+    private router: Router
+  ) {}
+  
   ngOnInit(): void {
     this.fetchHotels();
   }
@@ -47,11 +30,21 @@ export class HotelsList implements OnInit {
     this.fetchHotels();
   }
 
+  fetchHotels() {
+    this.hotelService.getHotels(this.filters).subscribe({
+      next: (res: Hotel[]) => {
+        this.hotels.set(res);
+        this.loading.set(false);
+      },
+      error: (err) => {
+        console.error('Error fetching hotels:', err);
+        this.loading.set(false);
+      },
+    });
+  }
+
   handleCardClick(hotelId: string) {
     this.router.navigate(['/book/stay', hotelId]);
   }
 
-  fetchHotels() {
-    this.hotels$ = this.hotelService.getHotels(this.filters);
-  }
 }

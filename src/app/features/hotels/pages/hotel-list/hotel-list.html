@@ -1,0 +1,20 @@
+<div>
+  @if (loading()) {
+  <p>Loading hotels...</p>
+  } @else if (hotels().length > 0) {
+  <div class="cards">
+    @for (hotelItem of hotels(); track hotelItem._id) {
+    <app-hotel-card
+      [hotel]="hotelItem"
+      (cardClicked)="handleCardClick($event)"
+    ></app-hotel-card>
+    }
+  </div>
+  } @else {
+  <div class="no-hotels-banner">
+    <div class="icon">🏨</div>
+    <h3>No Hotels Found</h3>
+    <p>Try changing or removing some filters or adjusting the search area.</p>
+  </div>
+  }
+</div>

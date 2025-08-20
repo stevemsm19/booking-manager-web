@@ -4,38 +4,17 @@ import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 @Component({
   selector: 'app-input-field',
   imports: [FormsModule, ReactiveFormsModule],
-  template: `
-    <div class="field">
-      <label>
-        {{ label }}
-        @if(required) {
-        <span class="required">*</span>
-        }
-      </label>
-
-      <input
-        [type]="type"
-        [placeholder]="placeholder"
-        [required]="required"
-        [formControl]="control"
-        [class.error]="error"
-      />
-
-      <div class="error-message">
-        @if(error) {
-          {{ error }}
-        }
-      </div>
-    </div>
-  `,
+  templateUrl: './input-field.html',
   styleUrls: ['./input-field.scss'],
-  standalone: true,
 })
 export class InputFieldComponent {
   @Input() label? = '';
-  @Input() type?: 'text' | 'password' | 'email' | 'number' = 'text';
+  @Input() type?: 'text' | 'password' | 'email' | 'number' | 'date' = 'text';
   @Input() placeholder? = '';
   @Input() control: FormControl = new FormControl();
   @Input() required = false;
   @Input() error: string = '';
+  // @Input() disabled: boolean = false;
+  @Input() min: number | string = '';
+  @Input() max: number | string = '';
 }

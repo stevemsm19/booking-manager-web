@@ -1,0 +1,27 @@
+button {
+  padding: 10px 16px;
+  border: none;
+  border-radius: 20px;
+  width: 100%;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  
+  &.primary {
+    background-color: #1976d2;
+    color: white;
+    &:hover { background-color: #135ba1; }
+  }
+
+  &.secondary {
+    background-color: white;
+    color: #1976d2;
+    border: 1px solid #1976d2;
+    &:hover { background-color: #e3f2fd; }
+  }
+
+  &.danger {
+    background-color: #f44336;
+    color: white;
+    &:hover { background-color: #d32f2f; }
+  }
+}

@@ -32,16 +32,6 @@
   .auth-buttons {
     display: flex;
     gap: 0.5rem;
-
-    button.signin {
-      color: white;
-    }
-
-    button.signup, button.profile {
-      background-color: white;
-      color: #1976d2;
-    }
-
   }
 
   @media (max-width: 768px) {

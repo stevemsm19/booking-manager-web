@@ -8,7 +8,7 @@ import {
 } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { LocalStorageService } from '../auth/services/local-storage';
+import { LocalStorageService } from '../services/local-storage';
 import { Router } from '@angular/router';
 
 @Injectable()

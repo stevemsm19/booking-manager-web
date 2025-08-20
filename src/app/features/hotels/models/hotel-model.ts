@@ -6,3 +6,9 @@ export interface Hotel {
   rating: number;
   price: number;
 }
+
+export interface HotelBookingDetails {
+  title: string,
+  houseRules: string,
+  cancellationPolicy: string,
+}

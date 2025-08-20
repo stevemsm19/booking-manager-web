@@ -1,0 +1,25 @@
+<div class="field">
+  <label>
+    {{ label }}
+    @if(required) {
+    <span class="required">*</span>
+    }
+  </label>
+
+  <input
+    [type]="type"
+    [placeholder]="placeholder"
+    [required]="required"
+    
+    [min]="min"
+    [max]="max"
+    [formControl]="control"
+    [class.error]="error"
+  />
+
+  <div class="error-message">
+    @if(error) {
+    {{ error }}
+    }
+  </div>
+</div>

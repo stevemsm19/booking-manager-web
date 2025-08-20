@@ -1,46 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { HotelService } from '../../services/hotel-services';
+import { HotelService } from '../services/hotel-services';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { tap } from 'rxjs';
-import { HotelDetails } from '../../interfaces/hotel-details';
+import { HotelBookingDetails } from '../hotels/models/hotel-model';
+import { InputFieldComponent } from "../../shared/components/input-field/input-field";
+import { ButtonComponent } from "../../shared/components/buttom/button";
 
 @Component({
   selector: 'app-book-stay',
-  imports: [FormsModule, ReactiveFormsModule],
-  template: `<div class="booking-container">
-    <h1>{{ hotel.title }}</h1>
-    <h2>Booking Details</h2>
-
-    <div>
-      <h3>Booking Dates</h3>
-      <div>
-        <label for="checkIn">Check-in:</label>
-        <input type="date" id="checkIn" [(ngModel)]="checkInDate" />
-      </div>
-
-      <div>
-        <label for="checkOut">Check-out:</label>
-        <input type="date" id="checkOut" [(ngModel)]="checkOutDate" />
-      </div>
-
-      <div>
-        <p>Booking for: {{ userName }}</p>
-      </div>
-    </div>
-
-    <div>
-      <h3>House Rules</h3>
-      <p>{{ hotel.houseRules }}</p>
-
-      <h3>Cancellation Policy</h3>
-      <p>{{ hotel.cancellationPolicy }}</p>
-    </div>
-
-    <button (click)="onSubmitBooking()" mat-raised-button color="primary">
-      Book Now
-    </button>
-  </div> `,
+  imports: [FormsModule, ReactiveFormsModule, InputFieldComponent, ButtonComponent],
+  templateUrl: './book-stay.html',
   styleUrls: ['./book-stay.scss'],
 })
 export class BookStayComponent implements OnInit {
@@ -49,6 +19,7 @@ export class BookStayComponent implements OnInit {
   checkInDate: string = '';
   checkOutDate: string = '';
   userName: string = 'Oscar M';
+https: any;
 
   constructor(
     private route: ActivatedRoute,
@@ -66,9 +37,9 @@ export class BookStayComponent implements OnInit {
 
   loadHotelDetails(hotelId: string): void {
     this.hotelService
-      .getHotelDetails(hotelId)
+      .getHotelById(hotelId)
       .pipe(
-        tap((response: HotelDetails) => {
+        tap((response: HotelBookingDetails) => {
           this.hotel = response;
           console.log(this.hotel.title); 
         })
