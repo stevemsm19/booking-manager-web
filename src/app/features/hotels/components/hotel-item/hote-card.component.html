@@ -1,0 +1,11 @@
+<app-card (clicked)="onCardClick()">
+  <img [src]="hotel.images" alt="{{ hotel.title }}" class="hotel-image" />
+  <div class="hotel-content">
+    <h3>{{ hotel.title }}</h3>
+    <p>{{ hotel.location }} ⭐ {{ hotel.rating }}</p>
+    <div class="price">
+      <span class="price-value">{{ hotel.price | currency : "USD" }}</span>
+      <span class="price-label">por noche</span>
+    </div>
+  </div>
+</app-card>

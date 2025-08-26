@@ -1,8 +1,8 @@
 import { Routes } from '@angular/router';
 import { MainPage } from './features/home/pages/main-page/main-page';
-import { BookStayComponent } from './features/booking/book-stay';
-import { LoginComponent } from './core/auth/pages/login/login';
-import { RegisterComponent } from './core/auth/pages/register/register';
+import { BookStayComponent } from './features/booking/pages/book-stay';
+import { LoginComponent } from './core/auth/pages/login/login.component';
+import { RegisterComponent } from './core/auth/pages/register/register.component';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },

@@ -1,52 +1,38 @@
-import { Component, inject, Input, OnInit, signal } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { Hotel } from '../../models/hotel-model';
-import { HotelService } from '../../../services/hotel-services';
-import { HotelCard } from '../../components/card-item/hotel-card';
+import { Component, OnInit } from '@angular/core';
+import { AsyncPipe, CommonModule } from '@angular/common';
+import { HotelApiResponse } from '../../models/hotel.model';
+import { HotelService } from '../../services/hotel.service';
+import { HotelCard } from '../../components/hotel-item/hotel-card.component';
 import { Router } from '@angular/router';
-import { Alert } from "../../../../shared/components/alert/alert";
+import { Observable } from 'rxjs';
+import { HotelFiltersService } from '../../services/hotel-filters.service';
+import { Filters } from '../../../search-bar/models/filters.model';
 
 @Component({
   selector: 'app-hotels-list',
-  imports: [CommonModule, HotelCard, Alert],
+  imports: [CommonModule, HotelCard, AsyncPipe],
   templateUrl: './hotel-list.html',
   styleUrl: './hotels-list.scss',
 })
 export class HotelsList implements OnInit {
-  @Input() filters: any = {};
-  @Input() messageError: string = '';
 
-  hotels = signal<Hotel[]>([]);
-  loading = signal(true);
+  hotels$!: Observable<HotelApiResponse[]>;
+  loading = true;
 
-  constructor(
-    private hotelService: HotelService,
-    private router: Router
-  ) {}
-  
-  ngOnInit(): void {
-    this.fetchHotels();
-  }
+  constructor(private hotelService: HotelService, private router: Router, private filtersService: HotelFiltersService) {}
 
-  ngOnChanges(): void {
-    this.fetchHotels();
-  }
-
-  fetchHotels() {
-    this.hotelService.getHotels(this.filters).subscribe({
-      next: (res: Hotel[]) => {
-        this.hotels.set(res);
-        this.loading.set(false);
-      },
-      error: (err) => {
-        console.error('Error fetching hotels:', err);
-        this.loading.set(false);
-      },
+  ngOnInit() {
+    this.filtersService.filters$.subscribe((filters) => {
+      this.fetchHotels(filters);
     });
+  }
+
+  fetchHotels(filters: Filters) {
+    this.hotels$ = this.hotelService.getHotels(filters);
+    this.loading = false;
   }
 
   handleCardClick(hotelId: string) {
     this.router.navigate(['/book/stay', hotelId]);
   }
-
 }

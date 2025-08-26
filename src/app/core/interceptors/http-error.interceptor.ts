@@ -1,0 +1,40 @@
+import { Injectable } from '@angular/core';
+import {
+  HttpEvent,
+  HttpHandler,
+  HttpRequest,
+  HttpErrorResponse,
+} from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { catchError } from 'rxjs/operators';
+import { LocalStorageService } from '../services/local-storage.service';
+import { Router } from '@angular/router';
+
+@Injectable()
+export class HttpErrorInterceptor {
+  constructor(private localStorage: LocalStorageService, private router: Router) {}
+
+  intercept(
+    req: HttpRequest<any>,
+    handler: HttpHandler
+  ): Observable<HttpEvent<any>> {
+    return handler.handle(req).pipe(
+      catchError((error: HttpErrorResponse) => {
+
+        if (error.status === 401) {
+          console.log('Unauthorized access');
+          this.localStorage.clear();
+          this.router.navigate(['/login'])
+        } else if (error.status === 500) {
+          console.log('Server error');
+          //Todo: Handle the 500 error if necessary
+        } else if (error.status === 404) {
+          console.log('Not Found');
+          //Todo: Handle the 404 error if necessary
+        }
+
+        throw error;
+      })
+    );
+  }
+}

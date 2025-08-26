@@ -1,0 +1,78 @@
+import { Component, signal } from '@angular/core';
+import {
+  ReactiveFormsModule,
+  FormGroup,
+  FormBuilder,
+  Validators,
+  FormControl,
+} from '@angular/forms';
+import { AuthService } from '../../../services/auth.service';
+import { Router } from '@angular/router';
+import { InputFieldComponent } from '../../../../shared/components/input-field/input-field.component';
+import { ValidationService } from '../../../services/validation.service';
+import { Alert } from '../../../../shared/components/alert/alert.component';
+import { ButtonComponent } from "../../../../shared/components/buttom/button.component";
+
+@Component({
+  selector: 'app-login',
+  imports: [ReactiveFormsModule, InputFieldComponent, Alert, ButtonComponent],
+  templateUrl: 'login.component.html',
+  styleUrls: ['./login.component.scss'],
+})
+export class LoginComponent {
+  loginForm: FormGroup;
+  submitted = false;
+  formError = signal<string>('');
+
+  constructor(
+    private fb: FormBuilder,
+    private authService: AuthService,
+    private router: Router
+  ) {
+    this.loginForm = this.fb.group({
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required]],
+    });
+  }
+
+  getControl(name: string) {
+    return this.loginForm.get(name) as FormControl;
+  }
+
+  getEmailErrorMessage(): string {
+    return ValidationService.getFieldErrorMessage(
+      this.getControl('email'),
+      this.submitted,
+      'Email'
+    );
+  }
+
+  getPasswordErrorMessage(): string {
+    return ValidationService.getFieldErrorMessage(
+      this.getControl('password'),
+      this.submitted,
+      'Password'
+    );
+  }
+
+  onSubmit() {
+    this.submitted = true;
+
+    if (this.loginForm.invalid) return;
+
+    const { email, password } = this.loginForm.value;
+
+    this.authService.login(email, password).subscribe({
+      next: () => {
+        this.router.navigate(['/']);
+      },
+      error: (err) => {
+        this.formError.set(err.error.details);
+
+        setTimeout(() => {
+          this.formError.set('');
+        }, 2000);
+      },
+    });
+  }
+}

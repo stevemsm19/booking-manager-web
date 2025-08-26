@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
-import { SearchBarComponent } from '../../../../shared/components/search-bar/search-bar';
+import { SearchBarComponent } from '../../../search-bar/component/search-bar.component';
 import { HotelsList } from '../../../hotels/pages/hotel-list/hotels-list';
+import { Filters } from '../../../search-bar/models/filters.model';
 
 @Component({
   selector: 'app-main-page',
@@ -9,9 +10,9 @@ import { HotelsList } from '../../../hotels/pages/hotel-list/hotels-list';
   styleUrls: ['./main-page.scss'],
 })
 export class MainPage {
-  filters: any = {};
+  filters: Filters = {};
 
-  onFiltersChanged(filters: any) {
+  onFiltersChanged(filters: Filters) {
     this.filters = filters;
   }
 }

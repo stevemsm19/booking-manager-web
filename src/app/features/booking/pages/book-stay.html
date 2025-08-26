@@ -1,0 +1,72 @@
+<div class="booking-container">
+  <div class="hotel-info">
+    <div class="hotel-header">
+      <h1>{{ title }}</h1>
+      <div class="hotel-rating">⭐ {{ rating }}</div>
+    </div>
+
+    <img [src]="images" [alt]="title" class="card-image" />
+
+    <div class="booking-dates">
+      <h2>Booking Dates</h2>
+      <div class="date-inputs">
+        <app-input-field
+          label="Check-in"
+          type="date"
+          id="checkIn"
+          [min]="minCheckInInput"
+          (change)="calculateTotal()"
+          [control]="checkInControl"
+        />
+        <app-input-field
+          label="Check-out"
+          type="date"
+          id="checkout"
+          (change)="calculateTotal()"
+          [min]="minCheckInInput"
+          [control]="checkOutControl"
+        />
+      </div>
+    </div>
+
+    <div class="hotel-policies">
+      <h3>Cancellation Policy</h3>
+      <p>{{ cancellationPolicy }}</p>
+    </div>
+  </div>
+
+  <div class="hotel-rooms">
+    <h2>Available Rooms</h2>
+
+    <div class="room-cards">
+      @for (room of (hotelDetails$ | async)?.rooms; track room._id) {
+        <app-room-card 
+        [room]="room" 
+        (quantityChange)="onQuantityChange($event)"/>
+      }
+    </div>
+
+    <div class="price-info">
+      <h2>Price Information</h2>
+      <p>
+        <strong>Price per night:</strong> {{ pricePerNight | currency : "USD"  }}
+      </p>
+      <p>
+        <strong>Amoutn of nights:</strong> {{ amountNights }}
+      </p>
+      <p>
+        @if (totalPrice > 0) {
+          <p><strong>Total price:</strong> {{ totalPrice | currency : "USD"  }}</p>
+        }
+        @else {
+          <p><strong>Total price:</strong> Enter your check-in and check-out dates and select at least one room to see the total price.</p>
+        }
+        
+      </p>
+    </div>
+
+    <div class="booking-actions">
+      <app-button color="danger" (onClick)="onSubmitBooking()">Book Now</app-button>
+    </div>
+  </div>
+</div>

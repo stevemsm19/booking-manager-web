@@ -1,0 +1,16 @@
+<app-card>
+  <div class="room-content">
+    <h3>{{ room.type }}</h3>
+
+    <p><strong>Capacity:</strong> {{ room.capacity }} guests</p>
+    <p>
+      <strong>{{ room.price | currency : "USD" }} / night</strong>
+    </p>
+
+    <div class="quantity-selector">
+      <button type="button" (click)="onRoomQuantityChange(-1)">-</button>
+      <span>{{ room.selectedQuantity }}</span>
+      <button type="button" (click)="onRoomQuantityChange(1)">+</button>
+    </div>
+  </div>
+</app-card>
