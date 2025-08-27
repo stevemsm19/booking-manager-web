@@ -5,13 +5,13 @@ import { AsyncPipe, CurrencyPipe } from '@angular/common';
 
 import { Observable, switchMap, tap } from 'rxjs';
 
-import { InputFieldComponent } from '../../../shared/components/input-field/input-field.component';
-import { ButtonComponent } from '../../../shared/components/buttom/button.component';
-import { HotelFiltersService } from '../../hotels/services/hotel-filters.service';
-import { HotelBookingResponse, Room } from '../models/hotel-booking.model';
-import { Filters } from '../../search-bar/models/filters.model';
-import { HotelBookingService } from '../services/hotel-booking.service';
-import { RoomCardComponent } from '../components/room-item/room-card.component';
+import { InputFieldComponent } from '../../../../shared/components/input-field/input-field.component';
+import { ButtonComponent } from '../../../../shared/components/buttom/button.component';
+import { HotelFiltersService } from '../../../hotels/services/hotel-filters.service';
+import { HotelBookingResponse, Room } from '../../models/hotel-booking.model';
+import { Filters } from '../../../search-bar/models/filters.model';
+import { HotelBookingService } from '../../services/hotel-booking.service';
+import { RoomCardComponent } from '../../components/room-card/room-card.component';
 
 @Component({
   selector: 'app-book-stay',
@@ -28,7 +28,7 @@ import { RoomCardComponent } from '../components/room-item/room-card.component';
   templateUrl: './book-stay.html',
   styleUrls: ['./book-stay.scss'],
 })
-export class BookStayComponent implements OnInit {
+export class BookStay implements OnInit {
   hotelId: string | null = null;
   hotelDetails$!: Observable<HotelBookingResponse>;
   filters!: Filters;

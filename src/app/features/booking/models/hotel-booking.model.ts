@@ -46,3 +46,16 @@ export interface PaginatedHotelBookingResponse {
   pageSize: number;
   totalElements: number;
 }
+
+export interface Booking {
+  id: string;
+  hotelName: string;
+  location: string;
+  confirmationCode: string;
+  rooms: string[];
+  cancellationPolicy: string;
+  checkInDate: string;
+  checkOutDate: string;
+  totalPrice: number;
+  nights: number;
+}

@@ -1,0 +1,42 @@
+.main-container {
+  display: grid;
+  grid-template-columns: 0.5fr 3.5fr; 
+  gap: 6rem;
+  padding: 3rem 5rem 3rem 8rem;
+  align-items: flex-start; 
+  min-height: 100vh; 
+}
+
+.buttons-container {
+  display: flex;
+  flex-direction: column;
+  width: 200px;
+  gap: 1rem;
+  justify-content: flex-start;
+}
+
+.bookings-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(600px, 1fr)); 
+  gap: 1.5rem;
+  min-height: 75vh;
+  justify-content: space-between;
+}
+
+.no-bookings {
+  display: flex;
+  flex-direction: column;
+  justify-content: center; 
+  align-items: center;  
+  text-align: center;
+  font-size: 1rem;
+  color: #6b7280;
+  margin-top: 2.5rem;
+  flex-grow: 1;  
+}
+
+.btn-started {
+  width: 20%;
+  margin-top: 1rem;
+  align-self: center;
+}
