@@ -4,6 +4,7 @@ import { HttpParams } from '@angular/common/http';
 import { HttpClientService } from '../../../core/services/http-client.service';
 import { map } from 'rxjs/operators';
 import {
+  Booking,
   HotelBookingResponse,
   PaginatedHotelBookingResponse,
 } from '../models/hotel-booking.model';
@@ -13,7 +14,8 @@ import { Filters } from '../../search-bar/models/filters.model';
   providedIn: 'root',
 })
 export class HotelBookingService {
-  private readonly baseEndpoint = 'hotels';
+  private readonly hotelsEndpoint = 'hotels';
+  private readonly bookingsEndpoint = 'bookings';
 
   constructor(private apiService: HttpClientService) {}
 
@@ -32,7 +34,7 @@ export class HotelBookingService {
 
     return this.apiService
       .get<PaginatedHotelBookingResponse>(
-        `${this.baseEndpoint}/${hotelId}/rooms`,
+        `${this.hotelsEndpoint}/${hotelId}/rooms`,
         { params }
       )
       .pipe(
@@ -43,7 +45,10 @@ export class HotelBookingService {
             hotel: {
               _id: hotel._id,
               title: hotel.title,
-              images: hotel.images?.length > 0 ? hotel.images : ['assets/no-image.png'],
+              images:
+                hotel.images?.length > 0
+                  ? hotel.images
+                  : ['assets/no-image.png'],
               rating: hotel.rating,
               price: hotel.price,
               houseRules: hotel.houseRules,
@@ -54,10 +59,18 @@ export class HotelBookingService {
               type: r.type,
               price: r.price,
               capacity: r.capacity,
-              selectedQuantity: 0
+              selectedQuantity: 0,
             })),
           };
         })
       );
+  }
+
+  cancelBooking(bookingId: string): Observable<Booking> {
+    const requestBody = {
+      reservationStatus: 'Cancelled',
+    };
+
+    return this.apiService.patch(`${this.bookingsEndpoint}/${bookingId}`, requestBody );
   }
 }

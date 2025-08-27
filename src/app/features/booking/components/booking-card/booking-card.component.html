@@ -1,0 +1,51 @@
+<div class="booking-card">
+  <div class="booking-header">
+    <div class="booking-details">
+      <span class="confirmation-code">
+        Confirmation code: {{ booking.confirmationCode }}
+      </span>
+      <div class="booking-title-row">
+        <h2 class="booking-title">{{ booking.hotelName }}</h2>
+      </div>
+      <div class="booking-info">
+        <p>
+          <span class="label">Reservation Date:</span>
+          {{ todayDate | date: 'yyyy-MM-dd' }}
+        </p>
+        <p><span class="label">Location:</span> {{ booking.location }}</p>
+        <p>
+          <span class="label">Rooms:</span> {{ booking.rooms.join(", ") }}
+        </p>
+      </div>
+    </div>
+
+    <div class="booking-dates">
+      <div class="dates-wrapper">
+        <div class="date-block">
+          <span class="date-label">Check-in</span>
+          <span class="date-value">{{ booking.checkInDate | date: 'yyyy-MM-dd' }}</span>
+        </div>
+        <div class="date-block">
+          <span class="date-label">Check-out</span>
+          <span class="date-value">{{ booking.checkOutDate | date: 'yyyy-MM-dd' }}</span>
+        </div>
+      </div>
+      <div class="booking-total">
+        <p class="nights">Nights: {{ booking.nights }}</p>
+        <p class="total">
+          Total: {{ booking.totalPrice | currency : "USD" }}
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="cancellation-policy-section">
+    <div class="cancellation-policy">
+      <p class="label">Cancellation policy</p>
+      <p>{{ booking.cancellationPolicy }}</p>
+    </div>
+    <div class="booking-actions">
+      <app-button color="danger" (click)="onViewDetailsClick()">Cancel</app-button>
+    </div>
+  </div>
+</div>
