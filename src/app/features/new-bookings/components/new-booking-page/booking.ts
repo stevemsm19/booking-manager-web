@@ -13,6 +13,7 @@ import { RoomCardComponent } from '../room-card/room-card';
 
 import { InputFieldComponent } from '../../../../shared/components/input-field/input-field';
 import { ButtonComponent } from '../../../../shared/components/buttom/button';
+import { LoadingSpinnerComponent } from "../../../../shared/loading-spinner/loading-spinner";
 
 @Component({
   selector: 'app-book-stay',
@@ -25,7 +26,8 @@ import { ButtonComponent } from '../../../../shared/components/buttom/button';
     AsyncPipe,
     RoomCardComponent,
     CurrencyPipe,
-  ],
+    LoadingSpinnerComponent
+],
   templateUrl: './booking.html',
   styleUrls: ['./booking.scss'],
 })
