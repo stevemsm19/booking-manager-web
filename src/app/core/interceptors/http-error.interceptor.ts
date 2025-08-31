@@ -5,10 +5,13 @@ import {
   HttpRequest,
   HttpErrorResponse,
 } from '@angular/common/http';
+import { Router } from '@angular/router';
+
 import { Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
+
 import { LocalStorageService } from '../services/local-storage.service';
-import { Router } from '@angular/router';
+import { HTTP_STATUS_CODE } from '../constants/status-constants';
 
 @Injectable()
 export class HttpErrorInterceptor {
@@ -21,14 +24,14 @@ export class HttpErrorInterceptor {
     return handler.handle(req).pipe(
       catchError((error: HttpErrorResponse) => {
 
-        if (error.status === 401) {
+        if (error.status === HTTP_STATUS_CODE.UNAUTHORIZED) {
           console.log('Unauthorized access');
           this.localStorage.clear();
           this.router.navigate(['/login'])
-        } else if (error.status === 500) {
+        } else if (error.status === HTTP_STATUS_CODE.INTERNAL_SERVER_ERROR) {
           console.log('Server error');
           //Todo: Handle the 500 error if necessary
-        } else if (error.status === 404) {
+        } else if (error.status === HTTP_STATUS_CODE.NOT_FOUND) {
           console.log('Not Found');
           //Todo: Handle the 404 error if necessary
         }

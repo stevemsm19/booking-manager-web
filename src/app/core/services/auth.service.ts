@@ -1,7 +1,10 @@
 import { Injectable, signal } from '@angular/core';
-import { LocalStorageService } from './local-storage.service';
+
 import { Observable, tap } from 'rxjs';
+
+import { API_ENDPOINTS } from '../constants/api-endpoints';
 import { HttpClientService } from './http-client.service';
+import { LocalStorageService } from './local-storage.service';
 
 interface LoginResponse {
   idToken: string;
@@ -11,23 +14,24 @@ interface LoginResponse {
   providedIn: 'root',
 })
 export class AuthService {
-  private loginUrl = 'auth/login';
-  private registerUrl = 'auth/register';
-  isLoggedIn = signal<boolean>(false); 
+  isLoggedIn = signal<boolean>(false);
 
   constructor(
     private apiService: HttpClientService,
     private localStorageService: LocalStorageService
-  ) {}
+  ) {
+    const isToken = this.getToken() ? true : false;
+    this.isLoggedIn.set(isToken);
+  }
 
   register(email: string, password: string): Observable<LoginResponse> {
     const payload = { email, password };
-    return this.apiService.post<LoginResponse>(this.registerUrl, payload);
+    return this.apiService.post<LoginResponse>(API_ENDPOINTS.AUTH.REGISTER, payload);
   }
 
   login(email: string, password: string): Observable<LoginResponse> {
     const payload = { email, password };
-    return this.apiService.post<LoginResponse>(this.loginUrl, payload).pipe(
+    return this.apiService.post<LoginResponse>(API_ENDPOINTS.AUTH.LOGIN, payload).pipe(
       tap((response: LoginResponse) => {
         this.isLoggedIn.set(true);
         this.localStorageService.setItem('accessToken', response.idToken);
@@ -36,7 +40,7 @@ export class AuthService {
   }
 
   getToken(): string | null {
-    return this.localStorageService.getItem<string>('accessToken');
+    return this.localStorageService.getItem('accessToken');
   }
 
   logout(): void {

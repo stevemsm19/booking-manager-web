@@ -1,0 +1,37 @@
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 60px; 
+  padding: 1rem 2rem;
+  font-size: 0.9rem;
+  background-color: #f0e9e9ec;
+  color: #555;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .footer-right {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+
+    .footer-item {
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    @media (max-width: 768px) {
+      justify-content: center;
+      width: 100%;
+    }
+  }
+}

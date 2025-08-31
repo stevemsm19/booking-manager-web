@@ -1,0 +1,68 @@
+<form [formGroup]="searchForm" (ngSubmit)="onSearch()" class="search-bar">
+  <div class="search-item where">
+    <app-input-field
+      label="Where to?"
+      placeholder="Destination"
+      [control]="getControl('location')!"
+      type="text"
+    />
+  </div>
+
+  <div class="search-item dates">
+    <div class="double-input">
+      <app-input-field
+        label="Check-in"
+        type="date"
+        [control]="getControl('checkIn')!"
+        [min]="minCheckInInput"
+        (change)="updateCheckOutMinDate()"
+      />
+
+      <app-input-field
+        label="Check-out"
+        type="date"
+        [control]="getControl('checkOut')"
+        [min]="minCheckOutInput()"
+      />
+    </div>
+  </div>
+
+  <div class="search-item travelers">
+    <app-input-field
+      label="Travelers"
+      type="number"
+      placeholder="Guests"
+      [min]="minTravelersInput"
+      [max]="maxTravelersInput"
+      [control]="getControl('numberOfGuests')!"
+    />
+  </div>
+
+  <div class="search-item price">
+    <div class="double-input">
+      <app-input-field
+        label="Min Price"
+        type="number"
+        placeholder="Min"
+        [min]="minPriceInput"
+        [max]="maxPriceInput"
+        [control]="getControl('minPrice')!"
+      />
+
+      <app-input-field
+        label="Max Price"
+        type="number"
+        placeholder="Max"
+        [min]="minPriceInput"
+        [max]="maxPriceInput"
+        [control]="getControl('maxPrice')"
+      />
+    </div>
+
+  </div>
+
+  <div class="button-group">
+    <app-button color="primary" type="submit">Search</app-button>
+    <app-button color="danger" type="button" (click)="clearFilters()">Clear Filters</app-button>
+  </div>
+</form>

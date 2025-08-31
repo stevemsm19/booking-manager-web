@@ -1,0 +1,52 @@
+<header class="header" color="primary">
+  <a routerLink="/">
+    <span class="logo-text">SofBook</span>
+  </a>
+
+  <a routerLink="/">
+    <span class="logo-short">SB</span>
+  </a>
+
+  <span class="spacer"></span>
+
+  <div class="auth-buttons">
+    @if (!isLoggedIn()) {
+      <app-button 
+        routerLink="/auth/login"
+        routerLinkActive="active-button"
+        #loginLink="routerLinkActive"
+        [color]="loginLink.isActive ? 'secondary' : 'primary'">
+        Login
+      </app-button>
+      <app-button 
+        routerLink="/auth/register"
+        routerLinkActive="active-button"
+        #registerLink="routerLinkActive"
+        [color]="registerLink.isActive ? 'secondary' : 'primary'">
+        Register
+      </app-button>
+    } @else {
+      <app-button 
+        routerLink="/"
+        routerLinkActive="active-button"
+        #homeLink="routerLinkActive"
+        [routerLinkActiveOptions]="{ exact: true }"
+        [color]="homeLink.isActive ? 'secondary' : 'primary'">
+        Home
+      </app-button>
+      <app-button 
+        routerLink="/bookings"
+        routerLinkActive="active-button"
+        #bookingsLink="routerLinkActive"
+        [color]="bookingsLink.isActive ? 'secondary' : 'primary'">
+        My Bookings
+      </app-button>
+      <app-button 
+        color="primary" 
+        (click)="logout()" 
+        routerLink="/">
+        Logout
+      </app-button>
+    }
+  </div>
+</header>

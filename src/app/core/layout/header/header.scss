@@ -1,0 +1,51 @@
+.header {
+  display: flex;
+  align-items: center;
+  height: 100px; 
+  padding: 0 2rem;
+  background: #1976d2;
+
+  @media (max-width: 768px) {
+    padding: 0 1rem 0 2rem;
+  }
+
+  a {
+    text-decoration: none;
+  }
+
+  .logo-text {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: white;
+    cursor: pointer;
+    
+    @media (max-width: 768px) {
+      display: none;
+    }
+  }
+
+  .logo-short {
+    display: none; 
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: white;
+    cursor: pointer;
+
+    @media (max-width: 768px) {
+      display: block;
+    }
+  }
+
+  .spacer {
+    flex: 1;
+  }
+
+  .auth-buttons {
+    display: flex;
+    gap: 0.5rem;
+
+    @media (max-width: 758px) {
+      gap: 0rem;
+    }
+  }
+}
