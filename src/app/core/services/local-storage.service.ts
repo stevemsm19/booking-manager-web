@@ -13,7 +13,7 @@ export class LocalStorageService {
       console.error('Error saving to local storage', error);
     }
   }
-  getItem<T>(key: string): T | null {
+  getItem(key: string): string| null {
     try {
       const value = localStorage.getItem(key);
       return value ? JSON.parse(value) : null;
@@ -21,6 +21,7 @@ export class LocalStorageService {
       return null;
     }
   }
+
   removeItem(key: string): void {
     localStorage.removeItem(key);
   }

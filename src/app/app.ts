@@ -1,21 +1,11 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { Header } from './core/layout/header/header.component';
-import { Footer } from './core/layout/footer/footer.component';
+import { Header } from './core/layout/header/header';
+import { Footer } from './core/layout/footer/footer';
 @Component({
   selector: 'app-root',
   imports: [Header, Footer, RouterOutlet],
-  template: `
-    <div class="app">
-      <app-header></app-header>
-
-      <div class="content">
-        <router-outlet></router-outlet>
-      </div>
-
-      <app-footer></app-footer>
-    </div>
-  `,
+  templateUrl: './app.html',
   styleUrl: './app.scss',
 })
 export class App {
