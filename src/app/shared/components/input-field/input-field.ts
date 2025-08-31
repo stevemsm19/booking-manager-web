@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
@@ -6,6 +6,7 @@ import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
   imports: [FormsModule, ReactiveFormsModule],
   templateUrl: './input-field.html',
   styleUrls: ['./input-field.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class InputFieldComponent {
   @Input() label? = '';
