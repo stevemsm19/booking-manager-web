@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { CurrencyPipe, DatePipe } from '@angular/common';
 
 import { Booking } from '../../models/my-bookings.model';
@@ -10,7 +10,10 @@ import { HotelBookingService } from '../../../new-bookings/services/hotel-detail
   imports: [CurrencyPipe, ButtonComponent, DatePipe],
   templateUrl: './booking-card.html',
   styleUrl: './booking-card.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
+
+// Todo: Move the cancellation logic to the parent.
 export class BookingCardComponent {
   @Input() booking!: Booking;
   @Input() todayDate = new Date();

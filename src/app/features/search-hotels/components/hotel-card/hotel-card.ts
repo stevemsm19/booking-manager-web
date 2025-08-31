@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { CurrencyPipe } from '@angular/common';
 
 import { Hotel } from '../../models/hotel.model';
@@ -10,6 +10,7 @@ import { CardComponent } from "../../../../shared/components/card/card";
   imports: [CurrencyPipe, CardComponent],
   templateUrl: './hote-card.html',
   styleUrls: ['./hotel-card.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HotelCard {
   @Input() hotel!: Hotel;
