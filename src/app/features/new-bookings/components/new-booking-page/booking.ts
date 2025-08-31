@@ -29,7 +29,7 @@ import { ButtonComponent } from '../../../../shared/components/buttom/button';
   templateUrl: './booking.html',
   styleUrls: ['./booking.scss'],
 })
-export class BookStayComponent implements OnInit {
+export class NewBookingComponent implements OnInit {
   hotelId: string | null = null;
   hotelDetails$!: Observable<HotelBookingResponse>;
   filters!: Filters;

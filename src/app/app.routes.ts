@@ -1,16 +1,10 @@
 import { Routes } from '@angular/router';
 
-import { BookStayComponent } from './features/new-bookings/components/new-booking-page/booking';
-import { LoginComponent } from './core/auth/login-page/login';
-import { RegisterComponent } from './core/auth/register-page/register';
-import { MainPage } from './features/home/components/main-page';
-import { BookingsComponent } from './features/my-bookings/components/bookings-page/bookings';
-
 export const routes: Routes = [
-  { path: 'auth/login', component: LoginComponent },
-  { path: 'auth/register', component: RegisterComponent },
-  { path: 'book/stay/:id', component: BookStayComponent },
-  { path: 'bookings', component: BookingsComponent },
-  { path: '', component: MainPage },
-  { path: '**', component: MainPage },
+  { path: 'auth/login', loadComponent: () => import('./core/auth/login-page/login').then(m => m.LoginComponent) },
+  { path: 'auth/register', loadComponent: () => import('./core/auth/register-page/register').then(m => m.RegisterComponent) },
+  { path: 'book/stay/:id', loadComponent: () => import('./features/new-bookings/components/new-booking-page/booking').then(m => m.NewBookingComponent) },
+  { path: 'bookings', loadComponent: () => import('./features/my-bookings/components/bookings-page/bookings').then(m => m.BookingsComponent) },
+  { path: '', loadComponent: () => import('./features/home/components/main-page').then(m => m.MainPage) },
+  { path: '**', loadComponent: () => import('./features/home/components/main-page').then(m => m.MainPage) },
 ];
