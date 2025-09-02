@@ -1,7 +1,13 @@
 <div class="login-container">
   <h1 class="heading-title leading">Login</h1>
-  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form">
+  <form
+    [formGroup]="loginForm"
+    (ngSubmit)="onSubmit()"
+    (change)="onChange()"
+    class="login-form"
+  >
     <app-input-field
+      inputId="email-user"
       label="Email"
       type="email"
       placeholder="Enter your email"
@@ -11,6 +17,7 @@
     />
 
     <app-input-field
+      inputId="password-user"
       label="Password"
       type="password"
       placeholder="Enter your password"
@@ -22,7 +29,7 @@
     <app-button color="primary" type="submit">Login</app-button>
 
     @if(formError()){
-      <app-alert type="error" [message]="formError()"></app-alert>
+    <app-alert type="error" [message]="formError()"></app-alert>
     }
 
     <span class="auth-footer">

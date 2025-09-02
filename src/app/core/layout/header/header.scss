@@ -44,8 +44,8 @@
     display: flex;
     gap: 0.5rem;
 
-    @media (max-width: 758px) {
-      gap: 0rem;
+    @media (max-width: 768px) {
+      gap: 0.1rem;
     }
   }
 }

@@ -19,7 +19,6 @@ import { Alert } from "../../../shared/components/alert/alert";
 export class LoginComponent {
   readonly submitted = signal(false);
   readonly formError = signal('');
-  readonly isLoading = signal(false);
 
   readonly loginForm: FormGroup<LoginForm>;
 
@@ -73,8 +72,6 @@ export class LoginComponent {
   private performLogin(): void {
     const { email, password } = this.loginForm.getRawValue();
 
-    this.isLoading.set(true);
-
     this.authService.login(email, password).subscribe({
       next: () => {
         this.handleLoginSuccess();
@@ -86,12 +83,10 @@ export class LoginComponent {
   }
 
   private handleLoginSuccess(): void {
-    this.isLoading.set(false);
     this.router.navigate(['/']);
   }
 
   private handleLoginError(error: any): void {
-    this.isLoading.set(false);
 
     const errorMessage =
       error?.error?.details || 'Error logging in. Please try again.';

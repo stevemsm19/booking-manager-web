@@ -13,7 +13,7 @@ import { RoomCardComponent } from '../room-card/room-card';
 
 import { InputFieldComponent } from '../../../../shared/components/input-field/input-field';
 import { ButtonComponent } from '../../../../shared/components/buttom/button';
-import { LoadingSpinnerComponent } from "../../../../shared/loading-spinner/loading-spinner";
+import { LoadingSpinnerComponent } from "../../../../shared/components/loading-spinner/loading-spinner";
 
 @Component({
   selector: 'app-book-stay',
@@ -41,7 +41,8 @@ export class NewBookingComponent implements OnInit {
   rating: number = 0;
   pricePerNight: number = 0;
   amountNights: number = 0;
-  cancellationPolicy: string = '';
+  minDaysForCancel: number = 0;
+  location: string = '';
 
   checkInControl = new FormControl('');
   checkOutControl = new FormControl('');
@@ -75,7 +76,8 @@ export class NewBookingComponent implements OnInit {
       tap((hotelDetails) => {
         this.title = hotelDetails.hotel.title;
         this.images = hotelDetails.hotel.images[0];
-        this.cancellationPolicy = hotelDetails.hotel.cancellationPolicy;
+        this.location = hotelDetails.hotel.location;
+        this.minDaysForCancel = hotelDetails.hotel.minDaysForCancel;
         this.rating = hotelDetails.hotel.rating;
         this.rooms = hotelDetails.rooms;
       })

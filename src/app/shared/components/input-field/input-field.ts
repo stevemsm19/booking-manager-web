@@ -10,6 +10,7 @@ import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 })
 export class InputFieldComponent {
   @Input() label? = '';
+  @Input() inputId = '';
   @Input() type?: 'text' | 'password' | 'email' | 'number' | 'date' = 'text';
   @Input() placeholder? = '';
   @Input() control: FormControl = new FormControl();

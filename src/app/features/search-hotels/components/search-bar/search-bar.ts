@@ -7,15 +7,15 @@ import {
   Validators,
 } from '@angular/forms';
 
-import { FIELD_NAMES } from '../../../core/constants/validations-constants';
-import { FiltersService } from '../../../core/services/filters.service';
+import { FIELD_NAMES } from '../../../../core/constants/validations-constants';
+import { FiltersService } from '../../../../core/services/filters.service';
 
-import { SearchBarForm } from '../models/search-bar.model';
+import { SearchBarForm } from '../../models/search-bar.model';
 
-import { ButtonComponent } from '../../../shared/components/buttom/button';
-import { InputFieldComponent } from '../../../shared/components/input-field/input-field';
-import { ValidationUtils } from '../../../shared/utils/validation-utils';
-import { priceRangeValidator } from '../../../shared/validators/price-range';
+import { ButtonComponent } from '../../../../shared/components/buttom/button';
+import { InputFieldComponent } from '../../../../shared/components/input-field/input-field';
+import { ValidationUtils } from '../../../../shared/utils/validation-utils';
+import { priceRangeValidator } from '../../../../shared/validators/price-range';
 
 @Component({
   selector: 'app-search-bar',
@@ -25,7 +25,6 @@ import { priceRangeValidator } from '../../../shared/validators/price-range';
 })
 export class SearchBarComponent {
   readonly submitted = signal(false);
-  readonly isLoading = signal(false);
 
   readonly searchForm: FormGroup<SearchBarForm>;
 
@@ -132,7 +131,6 @@ export class SearchBarComponent {
         size: 10,
       };
       this.filtersService.setFilters(filters);
-      this.isLoading.set(true);
     }
   }
 }

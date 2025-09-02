@@ -46,8 +46,9 @@ export class HotelBookingService {
                   : ['assets/no-image.png'],
               rating: hotel.rating,
               price: hotel.price,
+              location: hotel.location,
               houseRules: hotel.houseRules,
-              cancellationPolicy: hotel.cancellationPolicy,
+              minDaysForCancel: hotel.minDaysForCancel,
             },
             rooms: rooms.map((r) => ({
               _id: r._id,

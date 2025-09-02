@@ -10,14 +10,13 @@ import { CurrencyPipe } from '@angular/common';
   imports: [CardComponent, CurrencyPipe],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-// Todo: Move the quantity change logic to the parent
 export class RoomCardComponent {
   @Input() room!: Room;
   @Output() quantityChange = new EventEmitter<Room>();
 
   onRoomQuantityChange(amount: number) {
     const newValue = this.room.selectedQuantity + amount;
-    if (newValue >= 0) {
+    if (newValue >= 0 && newValue <= 1) {
       this.room.selectedQuantity = newValue;
       this.quantityChange.emit(this.room);
     }

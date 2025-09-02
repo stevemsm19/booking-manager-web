@@ -1,0 +1,23 @@
+<div class="tab-navigation">
+  <div class="tab-header">
+    <h2>{{ title }}</h2>
+  </div>
+
+  <div class="tab-buttons">
+    @for (tab of tabs; track tab.id) {
+      <button
+        class="tab-button"
+        [class.active]="tab.id === activeTab"
+        [class.disabled]="tab.disabled"
+        [disabled]="tab.disabled"
+        (click)="onTabClick(tab)"
+        type="button"
+      >
+        @if (tab.icon) {
+          <span class="tab-icon">{{ tab.icon }}</span>
+        }
+        <span class="tab-label">{{ tab.label }}</span>
+      </button>
+    }
+  </div>
+</div>

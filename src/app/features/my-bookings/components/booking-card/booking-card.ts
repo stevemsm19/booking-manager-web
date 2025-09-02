@@ -13,7 +13,6 @@ import { HotelBookingService } from '../../../new-bookings/services/hotel-detail
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 
-// Todo: Move the cancellation logic to the parent.
 export class BookingCardComponent {
   @Input() booking!: Booking;
   @Input() todayDate = new Date();

@@ -1,45 +1,33 @@
 <div class="main-container">
-  <div class="buttons-container">
-    <h2>Bookings</h2>
-    <app-button 
-      [color]="getButtonColor('current')"
-      (click)="showCurrentBookings()">
-      Current Bookings
-    </app-button>
-    <app-button 
-      [color]="getButtonColor('past')"
-      (click)="showPastBookings()">
-      Past Bookings
-    </app-button>
-    <app-button 
-      [color]="getButtonColor('canceled')"
-      (click)="showCanceledBookings()">
-      Canceled Bookings
-    </app-button>
-  </div>
+  <app-tab-navigation
+    title="Bookings"
+    [tabs]="bookingOptions"
+    [activeTab]="activeFilter()"
+    (tabChange)="onTabChange($event)">
+  </app-tab-navigation>
 
   <div class="header-container">
     <h2>{{ currentTitle() }}</h2>
+
     <div class="bookings-container">
       @for (booking of filteredBookings(); track booking.id) {
-        <app-booking-card [booking]="booking">
-        </app-booking-card>
+        <app-booking-card [booking]="booking"></app-booking-card>
       } @empty {
         <div class="no-bookings">
-          @if (isCurrentActive()) {
-            <div> 
+          @if (activeFilter() === 'active') {
+            <div>
               No current bookings found.
               <p>Book your next trip!</p>
               <div class="btn-started">
                 <app-button color="danger" routerLink="/">Get started</app-button>
               </div>
             </div>
-          } @else if (isPastActive()) {
+          } @else if (activeFilter() === 'completed') {
             <div>
               No past bookings found.
               <p>Your booking history will appear here</p>
             </div>
-          } @else if (isCanceledActive()) {
+          } @else if (activeFilter() === 'canceled') {
             <div>
               No canceled bookings found.
               <p>Canceled reservations will appear here</p>

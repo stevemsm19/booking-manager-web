@@ -1,7 +1,10 @@
 <div class="booking-container">
   <div class="hotel-info">
     <div class="hotel-header">
-      <h1>{{ title }}</h1>
+      <div class="hotel-location">
+        <h1>{{ title }}</h1>
+        <h4>📍{{ location }}</h4>
+      </div>
       <div class="hotel-rating">⭐ {{ rating }}</div>
     </div>
 
@@ -11,6 +14,7 @@
       <h2>Booking Dates</h2>
       <div class="date-inputs">
         <app-input-field
+          inputId="check-in-booking"
           label="Check-in"
           type="date"
           id="checkIn"
@@ -19,6 +23,7 @@
           [control]="checkInControl"
         />
         <app-input-field
+          inputId="check-out-booking"
           label="Check-out"
           type="date"
           id="checkout"
@@ -31,7 +36,12 @@
     @defer (on viewport) {
       <div class="hotel-policies">
         <h3>Cancellation Policy</h3>
-        <p>{{ cancellationPolicy }}</p>
+        @if (checkInControl.value != '' && checkOutControl.value != '') {
+          <p>{{ minDaysForCancel }}</p>
+        }
+        @else {
+          <p>Add your travel dates to get the cancellation details for this stay.</p>
+        }      
       </div>
     } @placeholder {
       <app-loading-spinner message="Loading booking details"></app-loading-spinner>
@@ -55,7 +65,7 @@
         <strong>Price per night:</strong> {{ pricePerNight | currency : "USD"  }}
       </p>
       <p>
-        <strong>Amoutn of nights:</strong> {{ amountNights }}
+        <strong>Amount of nights:</strong> {{ amountNights }}
       </p>
       <p>
         @if (totalPrice > 0) {

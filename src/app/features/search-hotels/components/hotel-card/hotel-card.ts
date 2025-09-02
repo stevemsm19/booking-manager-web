@@ -5,10 +5,11 @@ import { Hotel } from '../../models/hotel.model';
 
 import { CardComponent } from "../../../../shared/components/card/card";
 
+// Todo: implement filter listen to show or not the prices
 @Component({
   selector: 'app-hotel-card',
   imports: [CurrencyPipe, CardComponent],
-  templateUrl: './hote-card.html',
+  templateUrl: './hotel-card.html',
   styleUrls: ['./hotel-card.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

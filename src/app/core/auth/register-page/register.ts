@@ -22,7 +22,6 @@ export class RegisterComponent {
   readonly submitted = signal(false);
   readonly formError = signal<string>('');
   readonly formMessage = signal<string>('');
-  readonly isLoading = signal(false);
 
   readonly registerForm: FormGroup<RegisterForm>;
 
@@ -93,7 +92,6 @@ export class RegisterComponent {
   private performRegister(): void {
     const { email, password } = this.registerForm.getRawValue();
 
-    this.isLoading.set(true);
     this.clearFormError();
 
     this.authService.register(email, password).subscribe({
@@ -107,7 +105,6 @@ export class RegisterComponent {
   }
 
   private handleRegisterSuccess(): void {
-    this.isLoading.set(false);
     this.clearFormError();
     this.formMessage.set('User successfully registered. Redirecting......');
 
@@ -118,7 +115,6 @@ export class RegisterComponent {
   }
 
   private handleRegisterError(error: any): void {
-    this.isLoading.set(false);
     this.clearFormMessage();
 
     const errorMessage = error?.error?.details || 'Error registering user. Please try again.';

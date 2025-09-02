@@ -14,8 +14,9 @@ export interface HotelBookingDetails {
   images: string[];
   price: number;
   rating: number;
+  location: string;
   houseRules: string;
-  cancellationPolicy: string;
+  minDaysForCancel: number;
 }
 
 export interface HotelBookingResponse {
