@@ -28,11 +28,14 @@
         />
       </div>
     </div>
-
-    <div class="hotel-policies">
-      <h3>Cancellation Policy</h3>
-      <p>{{ cancellationPolicy }}</p>
-    </div>
+    @defer (on viewport) {
+      <div class="hotel-policies">
+        <h3>Cancellation Policy</h3>
+        <p>{{ cancellationPolicy }}</p>
+      </div>
+    } @placeholder {
+      <app-loading-spinner message="Loading booking details"></app-loading-spinner>
+    }
   </div>
 
   <div class="hotel-rooms">

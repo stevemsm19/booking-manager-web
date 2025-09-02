@@ -1,6 +1,6 @@
 <div>
   @if (loading()) {
-    <p>Loading hotels...</p>
+    <app-loading-spinner message="Loading hotels..."></app-loading-spinner>
   }
   <div class="hotel-cards">
     @for (hotelItem of hotels(); track hotelItem._id) {
