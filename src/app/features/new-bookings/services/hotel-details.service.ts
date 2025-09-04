@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, switchMap } from 'rxjs/operators';
 
 import { Filters } from '../../../core/models/filter.model';
 import { HttpClientService } from '../../../core/services/http-client.service';
 
-import { HotelBookingResponse, PaginatedHotelBookingResponse} from '../models/hotel-booking.model';
-import { Booking } from '../../my-bookings/models/my-bookings.model';
+import { HotelBookingResponse, PaginatedHotelBookingResponse} from '../models/hotel-details.model';
 import { API_ENDPOINTS } from '../../../core/constants/api-endpoints';
+import { CreateBookingRequest, CreateBookingResponse, UserInfo } from '../models/new-booking.model';
 
 @Injectable({
   providedIn: 'root',
@@ -62,11 +62,20 @@ export class HotelBookingService {
       );
   }
 
-  cancelBooking(bookingId: string): Observable<Booking> {
-    const requestBody = {
-      reservationStatus: 'Cancelled',
-    };
-
-    return this.apiService.patch(`${API_ENDPOINTS.BOOKINGS.UPDATE(bookingId)}`, requestBody );
+  createBooking(bookingData: CreateBookingRequest): Observable<CreateBookingResponse> {
+    return this.apiService.get<UserInfo>(API_ENDPOINTS.USER.GET_INFO)
+      .pipe(
+        switchMap((userInfo: UserInfo) => {
+          const bookingWithUserId = {
+            ...bookingData,
+            userId: userInfo._id
+          };
+          
+          return this.apiService.post<CreateBookingResponse>(
+            API_ENDPOINTS.BOOKINGS.CREATE,
+            bookingWithUserId
+          );
+        })
+      );
   }
 }

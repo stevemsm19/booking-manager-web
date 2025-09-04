@@ -2,7 +2,7 @@
   <div class="booking-header">
     <div class="booking-details">
       <span class="confirmation-code">
-        Confirmation code: {{ booking.confirmationCode }}
+        Confirmation code: {{ booking.confirmationCode | slice : 0 : 8 }}
       </span>
       <div class="booking-title-row">
         <h2 class="booking-title">{{ booking.hotelName }}</h2>
@@ -10,12 +10,10 @@
       <div class="booking-info">
         <p>
           <span class="label">Reservation Date:</span>
-          {{ todayDate | date: 'yyyy-MM-dd' }}
+          {{ booking.reservationDate | date : "yyyy-MM-dd" }}
         </p>
         <p><span class="label">Location:</span> {{ booking.location }}</p>
-        <p>
-          <span class="label">Rooms:</span> {{ booking.rooms.join(", ") }}
-        </p>
+        <p><span class="label">Rooms:</span> {{ booking.rooms.join(", ") }}</p>
       </div>
     </div>
 
@@ -23,18 +21,20 @@
       <div class="dates-wrapper">
         <div class="date-block">
           <span class="date-label">Check-in</span>
-          <span class="date-value">{{ booking.checkInDate | date: 'yyyy-MM-dd' }}</span>
+          <span class="date-value">{{
+            booking.checkInDate | date : "yyyy-MM-dd" : "UTC"
+          }}</span>
         </div>
         <div class="date-block">
           <span class="date-label">Check-out</span>
-          <span class="date-value">{{ booking.checkOutDate | date: 'yyyy-MM-dd' }}</span>
+          <span class="date-value">{{
+            booking.checkOutDate | date : "yyyy-MM-dd" : "UTC"
+          }}</span>
         </div>
       </div>
       <div class="booking-total">
         <p class="nights">Nights: {{ booking.nights }}</p>
-        <p class="total">
-          Total: {{ booking.totalPrice | currency : "USD" }}
-        </p>
+        <p class="total">Total: {{ booking.totalPrice | currency : "USD" }}</p>
       </div>
     </div>
   </div>
@@ -44,10 +44,15 @@
       <p class="label">Cancellation policy</p>
       <p>{{ booking.cancellationPolicy }}</p>
     </div>
-    @if (booking.status === "Active") {
-      <div class="booking-actions">
-        <app-button color="danger" (click)="onViewDetailsClick()">Cancel</app-button>
-      </div>
-    }
+    <div class="booking-actions">
+      @if (isActive()) {
+        <app-button
+        color="danger"
+        [disabled]="!isCancelable()"
+        (onClick)="onCancelClick()">
+        Cancel
+        </app-button>
+      }
+    </div>
   </div>
 </div>

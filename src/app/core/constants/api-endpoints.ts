@@ -18,9 +18,13 @@ export const API_ENDPOINTS = {
   },
 
   BOOKINGS: {
-    CREATE: '/bookings',
-    GET_ALL: '/bookings',
+    CREATE: 'bookings',
+    GET_ALL: 'bookings',
     GET_BY_ID: (id: string) => `bookings/${id}`,
     UPDATE: (id: string) => `bookings/${id}`,
   },
+
+  USER: {
+    GET_INFO: 'user/info'
+  }
 };

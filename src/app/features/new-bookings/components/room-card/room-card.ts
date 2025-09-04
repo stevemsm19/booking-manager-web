@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
-import { Room } from '../../models/hotel-booking.model';
+import { Room } from '../../models/hotel-details.model';
 import { CardComponent } from '../../../../shared/components/card/card';
 import { CurrencyPipe } from '@angular/common';
 

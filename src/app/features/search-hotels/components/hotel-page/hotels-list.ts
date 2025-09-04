@@ -50,6 +50,6 @@ export class HotelsList {
   }
 
   handleCardClick(hotelId: string): void {
-    this.router.navigate(['/book/stay', hotelId]);
+    this.router.navigate(['/book/hotel', hotelId]);
   }
 }

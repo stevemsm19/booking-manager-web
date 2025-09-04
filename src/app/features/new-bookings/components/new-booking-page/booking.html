@@ -1,85 +1,100 @@
-<div class="booking-container">
-  <div class="hotel-info">
-    <div class="hotel-header">
-      <div class="hotel-location">
-        <h1>{{ title }}</h1>
-        <h4>📍{{ location }}</h4>
+<form [formGroup]="bookingForm">
+  <div class="booking-container">
+    <div class="hotel-info">
+      <div class="hotel-header">
+        <div class="hotel-location">
+          <h1>{{ title }}</h1>
+          <h4>📍{{ location }}</h4>
+        </div>
+        <div class="hotel-rating">⭐ {{ rating }}</div>
       </div>
-      <div class="hotel-rating">⭐ {{ rating }}</div>
-    </div>
 
-    <img [src]="images" [alt]="title" class="card-image" />
+      <img [src]="images" [alt]="title" class="card-image" />
 
-    <div class="booking-dates">
-      <h2>Booking Dates</h2>
-      <div class="date-inputs">
-        <app-input-field
-          inputId="check-in-booking"
-          label="Check-in"
-          type="date"
-          id="checkIn"
-          [min]="minCheckInInput"
-          (change)="calculateTotal()"
-          [control]="checkInControl"
-        />
-        <app-input-field
-          inputId="check-out-booking"
-          label="Check-out"
-          type="date"
-          id="checkout"
-          (change)="calculateTotal()"
-          [min]="minCheckInInput"
-          [control]="checkOutControl"
-        />
+      <div class="booking-dates">
+        <h2>Booking Dates</h2>
+        <div class="date-inputs">
+          <app-input-field
+            inputId="check-in-booking"
+            label="Check-in"
+            type="date"
+            id="checkIn"
+            [min]="minCheckInInput"
+            (change)="calculateTotal()"
+            (change)="calculateTotal(); updateCheckOutMinDate()"
+            [control]="checkInControl"
+          />
+          <app-input-field
+            inputId="check-out-booking"
+            label="Check-out"
+            type="date"
+            id="checkout"
+            (change)="calculateTotal(); updateCancellationPolicy()"
+            [min]="minCheckOutInput"
+            [control]="checkOutControl"
+          />
+        </div>
       </div>
-    </div>
-    @defer (on viewport) {
-      <div class="hotel-policies">
-        <h3>Cancellation Policy</h3>
-        @if (checkInControl.value != '' && checkOutControl.value != '') {
-          <p>{{ minDaysForCancel }}</p>
-        }
-        @else {
-          <p>Add your travel dates to get the cancellation details for this stay.</p>
-        }      
-      </div>
-    } @placeholder {
-      <app-loading-spinner message="Loading booking details"></app-loading-spinner>
-    }
-  </div>
-
-  <div class="hotel-rooms">
-    <h2>Available Rooms</h2>
-
-    <div class="room-cards">
-      @for (room of (hotelDetails$ | async)?.rooms; track room._id) {
-        <app-room-card 
-        [room]="room" 
-        (quantityChange)="onQuantityChange($event)"/>
+      @defer (on viewport) {
+        <div class="hotel-policies">
+          <h3>Cancellation Policy</h3>
+          @if (checkInControl.value != '' && checkOutControl.value != '') {
+            <p> {{ cancellationPolicy() }}</p>
+          }
+          @else {
+            <p>Add your reservation dates to get the cancellation details for this stay.</p>
+          }
+        </div>
+      } @placeholder {
+        <app-loading-spinner message="Loading booking details"></app-loading-spinner>
       }
     </div>
 
-    <div class="price-info">
-      <h2>Price Information</h2>
-      <p>
-        <strong>Price per night:</strong> {{ pricePerNight | currency : "USD"  }}
-      </p>
-      <p>
-        <strong>Amount of nights:</strong> {{ amountNights }}
-      </p>
-      <p>
-        @if (totalPrice > 0) {
-          <p><strong>Total price:</strong> {{ totalPrice | currency : "USD"  }}</p>
-        }
-        @else {
-          <p><strong>Total price:</strong> Enter your check-in and check-out dates and select at least one room to see the total price.</p>
-        }
-        
-      </p>
-    </div>
+    <div class="hotel-rooms">
+      <h2>Available Rooms</h2>
 
-    <div class="booking-actions">
-      <app-button color="danger" (onClick)="onSubmitBooking()">Book Now</app-button>
+      <div class="room-cards">
+        @for (room of (hotelDetails$ | async)?.rooms; track room._id) {
+          <app-room-card 
+          [room]="room" 
+          (quantityChange)="onQuantityChange($event)"/>
+        }
+      </div>
+
+      <div class="price-info">
+        <h2>Price Information</h2>
+        <p>
+          <strong>Price per night:</strong> {{ pricePerNight | currency : "USD"  }}
+        </p>
+        <p>
+          <strong>Amount of nights:</strong> {{ amountNights }}
+        </p>
+        <p>
+          @if (totalPrice > 0) {
+            <p><strong>Total price:</strong> {{ totalPrice | currency : "USD"  }}</p>
+          }
+          @else {
+            <p><strong>Total price:</strong> Enter your check-in and check-out dates and select at least one room to see the total price.</p>
+          }
+          
+        </p>
+      </div>
+
+      <div class="confirmation-checkbox">
+        <label>
+          <input type="checkbox" formControlName="confirm" />
+          I confirm that all the booking information is correct.
+        </label>
+      </div>
+
+      <div class="booking-actions">
+        <app-button
+          color="danger"
+          (onClick)="onSubmitBooking()"
+        >
+          Book Now
+        </app-button>
+      </div>
     </div>
   </div>
-</div>
+</form>

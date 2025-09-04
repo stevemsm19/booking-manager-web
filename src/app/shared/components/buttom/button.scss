@@ -5,7 +5,7 @@ button {
   width: 100%;
   cursor: pointer;
   transition: background-color 0.2s ease;
-  font-size: 110%;
+  font-size: 1rem;
   
   &.primary {
     background-color: #1976d2;
@@ -24,5 +24,12 @@ button {
     background-color: #f44336;
     color: white;
     &:hover { background-color: #d32f2f; }
+  }
+  
+  &:disabled {
+    background-color: #ccc !important;
+    color: #666 !important;
+    cursor: not-allowed;
+    border: none;
   }
 }

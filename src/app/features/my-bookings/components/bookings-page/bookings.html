@@ -10,8 +10,11 @@
     <h2>{{ currentTitle() }}</h2>
 
     <div class="bookings-container">
-      @for (booking of filteredBookings(); track booking.id) {
-        <app-booking-card [booking]="booking"></app-booking-card>
+      @for (booking of filteredBookings(); track booking.confirmationCode) {
+        <app-booking-card 
+          [booking]="booking" 
+          (cancel)="onCancelBooking($event)">  
+        </app-booking-card>
       } @empty {
         <div class="no-bookings">
           @if (activeFilter() === 'active') {

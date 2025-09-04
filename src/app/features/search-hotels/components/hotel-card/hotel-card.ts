@@ -5,7 +5,6 @@ import { Hotel } from '../../models/hotel.model';
 
 import { CardComponent } from "../../../../shared/components/card/card";
 
-// Todo: implement filter listen to show or not the prices
 @Component({
   selector: 'app-hotel-card',
   imports: [CurrencyPipe, CardComponent],
