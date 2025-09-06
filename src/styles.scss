@@ -1,4 +1,42 @@
+:root {
+  --color-bg-primary: #f8f8f8;  
+  --color-bg-secondary: #f8f8f8; 
+
+  --color-primary-bg: #1976d2;
+  --color-primary-bg-hover: #135ba1;
+  --color-primary-text: #fff;
+
+  --color-secondary-bg: #fff;
+  --color-secondary-border: #1976d2;
+  --color-secondary-text: #1976d2;
+  --color-secondary-bg-hover: #e3f2fd;
+
+  --color-danger-bg: #f44336;
+  --color-danger-bg-hover: #d32f2f;
+  --color-danger-text: #fff;
+
+  --color-disabled-bg: #ccc;
+  --color-disabled-text: #666;
+
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.08);
+  --shadow-md: 0 4px 8px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 6px 12px rgba(0, 0, 0, 0.15);
+  --shadow-xl: 0 8px 16px rgba(0, 0, 0, 0.2);
+
+  --gap-xxs: 0.25rem;  
+  --gap-xs: 0.5rem;    
+  --gap-sm: 0.75rem;   
+  --gap-md: 1rem;      
+  --gap-lg: 1.5rem;    
+  --gap-xl: 2rem;      
+  --gap-xxl: 3rem;  
+
+  --radius-sm: 0.5rem;
+  --radius-md: 2rem;
+}
+
+
 body { 
   margin: 0; 
-  font-family: Roboto, "Helvetica Neue", sans-serif;
+  font-family: Roboto, "Helvetica Neue", sans-serif; 
 }

@@ -12,7 +12,7 @@
   .quantity-selector {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
+    gap: var(--gap-xs);
     font-size: 0.9rem;
   }
 
@@ -20,15 +20,15 @@
     width: 20px;
     height: 20px;
     border: none;
-    background: #eee;
-    border-radius: 6px;
+    background-color: #eee;
+    border-radius:  var(--radius-sm);
     font-size: 15px;
     cursor: pointer;
     transition: background 0.2s;
   }
 
   .quantity-selector button:hover {
-    background: #ddd;
+    background-color: #ddd;
   }
 
   .quantity-selector span {
