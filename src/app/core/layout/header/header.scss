@@ -3,9 +3,9 @@
   align-items: center;
   height: 100px; 
   padding: 0 2rem;
-  background: #1976d2;
+  background-color: var(--color-primary-bg);
 
-  @media (max-width: 768px) {
+  @media screen and (max-width: 768px) {
     padding: 0 1rem 0 2rem;
   }
 
@@ -16,10 +16,10 @@
   .logo-text {
     font-size: 1.8rem;
     font-weight: bold;
-    color: white;
+    color: var(--color-primary-text);
     cursor: pointer;
     
-    @media (max-width: 768px) {
+    @media screen and (max-width: 768px) {
       display: none;
     }
   }
@@ -31,7 +31,7 @@
     color: white;
     cursor: pointer;
 
-    @media (max-width: 768px) {
+    @media screen and (max-width: 768px) {
       display: block;
     }
   }
@@ -42,10 +42,10 @@
 
   .auth-buttons {
     display: flex;
-    gap: 0.5rem;
+    gap: var(--gap-xs);
 
-    @media (max-width: 768px) {
-      gap: 0.1rem;
+    @media screen and (max-width: 768px) {
+      gap: var(--gap-xxs);
     }
   }
 }

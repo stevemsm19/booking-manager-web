@@ -21,10 +21,10 @@ label {
 input {
   padding: 0.75rem;
   border: 1px solid #e2e8f0;
-  border-radius: 8px;
+  border-radius:  var(--radius-sm);
   font-size: 1rem;
   transition: all 0.2s ease;
-  background-color: #fff;
+  background-color: white;
 }
 
 input:hover {

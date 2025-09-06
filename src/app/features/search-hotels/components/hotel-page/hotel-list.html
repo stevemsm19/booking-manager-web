@@ -3,7 +3,8 @@
   @if (loading()) {
     <app-loading-spinner message="Loading hotels..."></app-loading-spinner>
   }
-  <div class="hotel-cards">
+  @else {
+    <div class="hotel-cards">
     @for (hotelItem of hotels(); track hotelItem._id) {
       <app-hotel-card
         [hotel]="hotelItem"
@@ -17,4 +18,5 @@
       </div>
     }
   </div>
+  }
 </div>

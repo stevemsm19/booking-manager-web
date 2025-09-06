@@ -1,7 +1,7 @@
 .booking-container {
   display: grid;
   grid-template-columns: 2fr 1fr; 
-  gap: 2rem;
+  gap: var(--gap-xl);
   margin: 1rem auto;
   max-width: 1600px;
 }
@@ -29,21 +29,20 @@
   font-size: 1.2rem;  
   font-weight: bold;
   color: #ff9800;    
-  padding: 4px 8px;
+  padding: 0.5rem;
 }
 
 .hotel-info,
 .hotel-rooms {
-  background: #fff;
   padding: 1rem;
-  border-radius: 12px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  border-radius:  var(--radius-sm);
+  box-shadow: var(--shadow-md);
 }
 
 .room-cards {
   display: flex;
   flex-wrap: wrap;
-  gap: 1rem;
+  gap: var(--gap-md);
   padding: 10px;
   margin-top: 1rem;
 }
@@ -54,16 +53,16 @@
 
 .card-image {
   width: 100%;
-  border-radius: 8px;
+  border-radius:  var(--radius-sm);
   margin: 1rem 0;
   object-fit: cover;
 }
 
 .hotel-policies {
   margin: 1.5rem 0;
-  background: #f9f9f9;
+  background-color: #f9f9f9;
   padding: 1rem;
-  border-radius: 8px;
+  border-radius:  var(--radius-sm);
 }
 
 .booking-dates {
@@ -73,8 +72,8 @@
 .price-info {
   margin: 1.5rem 0;
   padding: 1rem;
-  background: #f0f4ff;
-  border-radius: 8px;
+  background-color: #f0f4ff;
+  border-radius:  var(--radius-sm);
 
   p {
     font-size: 0.95rem;
@@ -87,7 +86,7 @@
   margin-top: 1.5rem;
 }
 
-@media (max-width: 768px) {
+@media screen and (max-width: 768px) {
   .booking-container {
     grid-template-columns: 1fr; 
   }
@@ -96,22 +95,22 @@
 .quantity-selector {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: var(--gap-xs);
 }
 
 .quantity-selector button {
   width: 20px;
   height: 20px;
   border: none;
-  background: #eee;
-  border-radius: 6px;
+  background-color: #eee;
+  border-radius:  var(--radius-sm);
   font-size: 18px;
   cursor: pointer;
   transition: background 0.2s;
 }
 
 .quantity-selector button:hover {
-  background: #ddd;
+  background-color: #ddd;
 }
 
 .quantity-selector span {
@@ -126,7 +125,7 @@
   font-size: 0.95rem;
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: var(--gap-xs);
 
   input[type='checkbox'] {
     transform: scale(1.2);

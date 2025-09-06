@@ -1,13 +1,13 @@
 .main-container {
   display: grid;
   grid-template-columns: 280px 1fr;
-  gap: 3rem;
+  gap: var(--gap-xxl);
   padding: 2rem 3rem;
   align-items: flex-start;
 
-  @media (max-width: 768px) {
+  @media screen and (max-width: 768px) {
     grid-template-columns: 1fr;
-    gap: 0.5rem;
+    gap: var(--gap-xs);
     padding: 1.5rem;
   }
 }
@@ -26,17 +26,13 @@
 .bookings-container {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
-  gap: 2rem;
+  gap: var(--gap-xl);
   min-height: 60vh;
 
-  @media (max-width: 768px) {
+  @media screen and (max-width: 768px) {
     grid-template-columns: 1fr; 
-    gap: 1.5rem;
+    gap: var(--gap-md);
     min-height: auto;
-  }
-
-  @media (max-width: 768px) {
-    gap: 1rem;
   }
 }
 

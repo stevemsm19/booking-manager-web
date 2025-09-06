@@ -4,13 +4,6 @@
   align-items: center;
   justify-content: center;
   min-height: 82vh;
-  background-color: #f4f4f4;
-
-  @media (max-width: 768px) {
-    .register-form {
-      width: 70%;
-    }
-  }
 
   .heading-title {
     font-size: 2rem;
@@ -24,9 +17,9 @@
     margin: 0 auto;
     max-width: 350px;
     width: 100%; 
-    background-color: #f8f8f8;
+    background-color: var(--color-bg-secondary);
     padding: 2rem;
-    border-radius: 8px;
+    border-radius:  var(--radius-sm);
     border: 1px solid #ddd;
 
     .auth-footer {
@@ -42,6 +35,10 @@
         margin-left: 0.25rem;
         text-decoration: underline;
       }
+    }
+
+    @media screen and (max-width: 390px) {
+      max-width: 300px;
     }
   }
 }
