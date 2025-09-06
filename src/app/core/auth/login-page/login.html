@@ -1,10 +1,11 @@
-<div class="login-container">
-  <h1 class="heading-title leading">Login</h1>
+<div class="login">
+  <h1 class="login__title">Login</h1>
+  
   <form
     [formGroup]="loginForm"
     (ngSubmit)="onSubmit()"
     (change)="onChange()"
-    class="login-form"
+    class="login__form"
   >
     <app-input-field
       inputId="email-user"
@@ -29,11 +30,11 @@
     <app-button color="primary" type="submit">Login</app-button>
 
     @if(formError()){
-    <app-alert type="error" [message]="formError()"></app-alert>
+      <app-alert type="error" [message]="formError()"></app-alert>
     }
 
-    <span class="auth-footer">
-      Don't have an account? <a href="/auth/register">I want an account</a>
+    <span class="login__footer">
+      Don’t have an account? <a class="login__footer-link" href="/auth/register">I want an account</a>
     </span>
   </form>
 </div>
